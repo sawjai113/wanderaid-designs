@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wanderaid — Design Explorations</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: #F4F2EE;
+    color: #1C1A17;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 48px 24px 72px; }
+  header { max-width: 720px; margin-bottom: 40px; }
+  .kicker {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #8A6D4B; margin-bottom: 12px;
+  }
+  h1 { font-size: 40px; line-height: 1.1; letter-spacing: -0.02em; font-weight: 700; margin-bottom: 14px; }
+  header p { font-size: 17px; color: #5C5750; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px; }
+  .card {
+    background: #FFFDF9; border: 1px solid #E8E2D8; border-radius: 20px; overflow: hidden;
+    display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(28,26,23,0.04), 0 12px 32px -20px rgba(28,26,23,0.25);
+  }
+  .stage {
+    height: 620px; overflow: hidden; position: relative; background: #EDEBE6;
+    display: flex; align-items: flex-start; justify-content: center; padding: 28px 0 0;
+  }
+  .stage iframe { width: 375px; height: 780px; border: 0; border-radius: 18px; transform: scale(0.72); transform-origin: top center; box-shadow: 0 0 0 1px rgba(0,0,0,0.12), 0 24px 48px -24px rgba(0,0,0,0.4); background: #fff; }
+  .card-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .stance { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #8A6D4B; }
+  .card h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .card p { font-size: 14.5px; color: #5C5750; }
+  .card a {
+    margin-top: 10px; font-size: 14px; font-weight: 600; color: #fff; background: #1C1A17;
+    padding: 10px 16px; border-radius: 10px; text-decoration: none; align-self: flex-start;
+  }
+  .card a:hover { background: #3A352E; }
+  footer { margin-top: 48px; font-size: 13.5px; color: #8A857C; max-width: 720px; }
+  footer code { background: #E9E4DA; padding: 1px 6px; border-radius: 6px; font-size: 12.5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">Wanderaid · Trip Dashboard · Round 1</div>
+    <h1>Three takes on the trip home screen</h1>
+    <p>Same screen, three different design stances. Open each on your phone or laptop, poke around, and tell me what feels right — we can merge, push further, or start a new direction. All content is fake sample data.</p>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <div class="stage"><iframe src="variants/001-calm-editorial/index.html" title="Calm Editorial variant" loading="lazy"></iframe></div>
+      <div class="card-body">
+        <div class="stance">Variant 1</div>
+        <h2>Calm Editorial</h2>
+        <p>Travel-journal warmth — serif display type, paper tones, a single forest-green accent. Content-first: the trip story leads, chrome disappears.</p>
+        <a href="variants/001-calm-editorial/index.html" target="_blank" rel="noopener">Open full screen →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="stage"><iframe src="variants/002-utilitarian-dense/index.html" title="Utilitarian Dense variant" loading="lazy"></iframe></div>
+      <div class="card-body">
+        <div class="stance">Variant 2</div>
+        <h2>Utilitarian Dense</h2>
+        <p>Tool-first console: compact rows, tabbed Current/Past, mono numerals, one blue accent. Maximum information per pixel.</p>
+        <a href="variants/002-utilitarian-dense/index.html" target="_blank" rel="noopener">Open full screen →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="stage"><iframe src="variants/003-playful-social/index.html" title="Playful Social variant" loading="lazy"></iframe></div>
+      <div class="card-body">
+        <div class="stance">Variant 3</div>
+        <h2>Playful Social</h2>
+        <p>Group-chat energy: avatar clusters, per-feature colors (people purple, places red, expenses blue), activity feed, a real New Trip modal.</p>
+        <a href="variants/003-playful-social/index.html" target="_blank" rel="noopener">Open full screen →</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Source lives in <code>sawjai113/wanderaid-designs</code>. Every revision is a commit — pick a direction and I'll turn it into a SwiftUI implementation next.
+  </footer>
+</div>
+</body>
+</html>

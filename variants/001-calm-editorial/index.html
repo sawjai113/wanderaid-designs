@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wanderaid · Calm Editorial</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: #F4F1EA;
+    color: #2B2722;
+    line-height: 1.5;
+  }
+  .phone {
+    max-width: 420px; margin: 0 auto; min-height: 100vh;
+    background: #F7F4EF; padding-bottom: 48px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.06);
+  }
+  .serif { font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; }
+
+  /* header */
+  header { padding: 28px 24px 18px; display: flex; align-items: baseline; justify-content: space-between; }
+  .wordmark { font-size: 24px; font-weight: 600; letter-spacing: -0.01em; }
+  .wordmark span { color: #3E6B4F; }
+  .mode { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #8A8378; }
+  .mode b { color: #3E6B4F; font-weight: 600; }
+
+  /* hero carousel */
+  .hero { margin: 6px 24px 30px; position: relative; border-radius: 22px; overflow: hidden; box-shadow: 0 18px 40px -22px rgba(43,39,34,0.45); }
+  .slides { display: flex; transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+  .slide { min-width: 100%; position: relative; }
+  .slide img { width: 100%; height: 330px; object-fit: cover; display: block; }
+  .slide::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,16,10,0.72), rgba(20,16,10,0.05) 55%); }
+  .slide-body { position: absolute; left: 20px; right: 20px; bottom: 18px; color: #FBF8F2; z-index: 1; }
+  .badge {
+    display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px; margin-bottom: 10px;
+  }
+  .badge.current { background: rgba(255,255,255,0.92); color: #3E6B4F; }
+  .badge.next { background: rgba(255,255,255,0.92); color: #9A6B3A; }
+  .slide-body h2 { font-size: 26px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; }
+  .slide-body .dest { font-size: 13.5px; color: rgba(251,248,242,0.82); margin-top: 3px; }
+  .dots { display: flex; justify-content: center; gap: 7px; margin-top: 14px; }
+  .dots button {
+    width: 7px; height: 7px; border-radius: 999px; border: 0; background: #D8D1C4; cursor: pointer; padding: 0; transition: all 0.25s;
+  }
+  .dots button.on { width: 22px; background: #3E6B4F; }
+
+  /* quiet stats under hero */
+  .hero-stats { margin: -14px 24px 34px; background: #FFFDF8; border: 1px solid #EAE3D6; border-radius: 16px; padding: 16px 18px; display: flex; gap: 12px; }
+  .stat { flex: 1; }
+  .stat .label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #A29A8C; margin-bottom: 4px; }
+  .stat .value { font-size: 15px; font-weight: 600; }
+
+  /* sections */
+  .section { margin: 0 24px 30px; }
+  .section-head {
+    font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #A29A8C;
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;
+  }
+  .section-head::after { content: ""; flex: 1; height: 1px; background: #E4DCCE; margin-left: 14px; }
+
+  /* coming up */
+  .upcoming { background: #FFFDF8; border: 1px solid #EAE3D6; border-radius: 16px; overflow: hidden; }
+  .upcoming-row { display: flex; align-items: center; gap: 14px; padding: 16px 18px; cursor: pointer; text-decoration: none; color: inherit; transition: background 0.2s; }
+  .upcoming-row:hover { background: #FBF7EF; }
+  .upcoming-row + .upcoming-row { border-top: 1px solid #F0EAE0; }
+  .upcoming-thumb { width: 52px; height: 52px; border-radius: 12px; object-fit: cover; }
+  .upcoming-meta { flex: 1; min-width: 0; }
+  .upcoming-meta h3 { font-size: 16px; font-weight: 600; }
+  .upcoming-meta .dates { font-size: 12.5px; color: #8A8378; margin-top: 2px; }
+  .upcoming-meta .dates b { color: #5C5548; font-weight: 600; }
+  .chev { color: #C4BBA9; font-size: 18px; }
+
+  /* past trips — collapsible */
+  #pastList { overflow: hidden; max-height: 0; transition: max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+  #pastList.open { max-height: 400px; }
+  .past-row {
+    display: flex; align-items: center; gap: 14px; padding: 13px 18px; cursor: pointer; text-decoration: none; color: inherit; transition: background 0.2s;
+  }
+  .past-row:hover { background: #FBF7EF; }
+  .past-row .yr { font-size: 11.5px; color: #A29A8C; width: 52px; flex-shrink: 0; letter-spacing: 0.04em; }
+  .past-row .nm { flex: 1; font-size: 15px; font-weight: 500; }
+  .past-row .cnt { font-size: 12px; color: #8A8378; }
+  .toggle-btn {
+    width: 100%; display: flex; align-items: center; gap: 8px; padding: 14px 18px 0;
+    background: none; border: 0; color: #3E6B4F; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  }
+  .toggle-btn .arrow { transition: transform 0.3s; }
+  .toggle-btn.open .arrow { transform: rotate(180deg); }
+
+  footer { margin: 40px 24px 0; text-align: center; font-size: 11.5px; color: #B8B0A1; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <header>
+    <div class="wordmark serif">Wanderaid<span>.</span></div>
+    <div class="mode">Signed in · <b>Cloud</b></div>
+  </header>
+
+  <div class="hero">
+    <div class="slides" id="slides">
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800" alt="">
+        <div class="slide-body">
+          <span class="badge current">Current trip</span>
+          <h2 class="serif">Kyoto in the Fall</h2>
+          <div class="dest">Kyoto, Japan · Oct 12 – 18</div>
+        </div>
+      </div>
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=800" alt="">
+        <div class="slide-body">
+          <span class="badge next">Next trip</span>
+          <h2 class="serif">Big Sur Weekend</h2>
+          <div class="dest">Big Sur, CA · Nov 6 – 8</div>
+        </div>
+      </div>
+    </div>
+    <div class="dots" id="dots"></div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat"><div class="label">People</div><div class="value">5</div></div>
+    <div class="stat"><div class="label">Places</div><div class="value">12</div></div>
+    <div class="stat"><div class="label">Messages</div><div class="value">48</div></div>
+    <div class="stat"><div class="label">Spent</div><div class="value">$1,240</div></div>
+  </div>
+
+  <section class="section">
+    <div class="section-head">Coming up</div>
+    <div class="upcoming">
+      <a class="upcoming-row" href="#">
+        <img class="upcoming-thumb" src="https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=200" alt="">
+        <div class="upcoming-meta">
+          <h3>Big Sur Weekend</h3>
+          <div class="dates"><b>Nov 6 – 8</b> · 4 people · 8 places</div>
+        </div>
+        <span class="chev">›</span>
+      </a>
+      <a class="upcoming-row" href="#">
+        <img class="upcoming-thumb" src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=200" alt="">
+        <div class="upcoming-meta">
+          <h3>Lake Tahoe Reunion</h3>
+          <div class="dates"><b>Dec 18 – 21</b> · 7 people · 6 places</div>
+        </div>
+        <span class="chev">›</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">Past trips</div>
+    <button class="toggle-btn" id="pastToggle" aria-expanded="false">
+      Show 3 past trips <span class="arrow">⌄</span>
+    </button>
+    <div id="pastList">
+      <a class="past-row" href="#"><span class="yr">May 2026</span><span class="nm">Lake Tahoe</span><span class="cnt">6 people</span></a>
+      <a class="past-row" href="#"><span class="yr">Mar 2026</span><span class="nm">Portland Food Tour</span><span class="cnt">4 people</span></a>
+      <a class="past-row" href="#"><span class="yr">Sep 2025</span><span class="nm">Yosemite Camping</span><span class="cnt">8 people</span></a>
+    </div>
+  </section>
+
+  <footer>Wanderaid · design exploration — sample data only</footer>
+</div>
+
+<script>
+  (function () {
+    var slides = document.getElementById('slides');
+    var dotsWrap = document.getElementById('dots');
+    var n = document.querySelectorAll('.slide').length;
+    var active = 0;
+    for (var i = 0; i < n; i++) {
+      var b = document.createElement('button');
+      b.setAttribute('aria-label', 'Slide ' + (i + 1));
+      b.addEventListener('click', function (idx) { return function () { go(idx); }; }(i));
+      if (i === 0) b.className = 'on';
+      dotsWrap.appendChild(b);
+    }
+    function go(i) {
+      active = i;
+      slides.style.transform = 'translateX(-' + (i * 100) + '%)';
+      Array.prototype.forEach.call(dotsWrap.children, function (d, j) { d.className = j === i ? 'on' : ''; });
+    }
+    var t = document.getElementById('pastToggle');
+    var l = document.getElementById('pastList');
+    t.addEventListener('click', function () {
+      var open = l.classList.toggle('open');
+      t.classList.toggle('open', open);
+      t.setAttribute('aria-expanded', open ? 'true' : 'false');
+      t.firstChild.textContent = open ? ' Hide past trips ' : ' Show 3 past trips ';
+    });
+  })();
+</script>
+</body>
+</html>

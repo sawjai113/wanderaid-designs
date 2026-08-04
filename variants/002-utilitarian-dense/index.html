@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wanderaid · Utilitarian Dense</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: #E9EBEE;
+    color: #14161A;
+    line-height: 1.4;
+  }
+  .phone { max-width: 420px; margin: 0 auto; min-height: 100vh; background: #F5F6F8; padding-bottom: 40px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07); }
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+
+  /* compact header */
+  header { background: #F5F6F8; padding: 14px 16px 10px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #E2E5EA; }
+  .mark { width: 26px; height: 26px; border-radius: 7px; background: #1A75D1; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 13px; flex-shrink: 0; }
+  .appname { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+  .appname small { color: #1A75D1; font-weight: 600; margin-left: 2px; }
+  .spacer { flex: 1; }
+  .mode { font-size: 10.5px; font-weight: 600; color: #1F8A4C; background: #E2F3E8; padding: 3px 8px; border-radius: 999px; }
+  .icon-btn {
+    width: 34px; height: 34px; border-radius: 9px; border: 1px solid #DDE1E7; background: #fff; color: #14161A;
+    font-size: 15px; cursor: pointer; display: grid; place-items: center; transition: background 0.15s;
+  }
+  .icon-btn:hover { background: #EEF1F5; }
+  .icon-btn.primary { background: #1A75D1; border-color: #1A75D1; color: #fff; width: auto; padding: 0 14px; font-size: 13px; font-weight: 600; gap: 6px; display: flex; }
+  .icon-btn.primary:hover { background: #1664B4; }
+
+  /* tabs */
+  .tabs { display: flex; margin: 14px 16px 4px; background: #E9ECF1; border-radius: 10px; padding: 3px; }
+  .tabs button {
+    flex: 1; border: 0; background: none; padding: 8px 0; font-size: 13px; font-weight: 600; color: #5B6472;
+    border-radius: 8px; cursor: pointer; transition: all 0.15s;
+  }
+  .tabs button.on { background: #fff; color: #14161A; box-shadow: 0 1px 3px rgba(20,22,26,0.12); }
+  .tabs button:not(.on):hover { color: #14161A; }
+
+  /* current trip summary card */
+  .summary { margin: 12px 16px 18px; background: #fff; border: 1px solid #E2E5EA; border-radius: 14px; padding: 16px; }
+  .summary .kicker { font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; color: #1A75D1; text-transform: uppercase; }
+  .summary h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin-top: 4px; }
+  .summary .dest { font-size: 13px; color: #5B6472; margin-top: 2px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #EFF1F4; }
+  .meta-grid .cell { }
+  .meta-grid .v { font-size: 15px; font-weight: 700; }
+  .meta-grid .v.mono { font-size: 14px; }
+  .meta-grid .l { font-size: 10px; color: #8B93A1; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 1px; }
+  .summary .actions { display: flex; gap: 8px; margin-top: 14px; }
+  .summary .actions a {
+    flex: 1; text-align: center; text-decoration: none; font-size: 13px; font-weight: 600; padding: 10px 0; border-radius: 9px; transition: all 0.15s;
+  }
+  .btn-solid { background: #1A75D1; color: #fff; }
+  .btn-solid:hover { background: #1664B4; }
+  .btn-ghost { background: #F0F2F6; color: #14161A; }
+  .btn-ghost:hover { background: #E4E8EF; }
+
+  /* list */
+  .list-head { display: flex; justify-content: space-between; align-items: baseline; padding: 2px 16px 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #8B93A1; }
+  .list-head .count { color: #B4BAC4; font-weight: 600; }
+  .row {
+    background: #fff; display: flex; align-items: center; gap: 12px; padding: 13px 16px;
+    border-bottom: 1px solid #EDEFF3; cursor: pointer; text-decoration: none; color: inherit; transition: background 0.12s;
+  }
+  .row:first-of-type { border-top: 1px solid #E2E5EA; }
+  .row:hover { background: #F8FAFD; }
+  .row .status {
+    width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0;
+  }
+  .row .status.live { background: #1F8A4C; box-shadow: 0 0 0 3px #E2F3E8; }
+  .row .status.up { background: #F5A623; box-shadow: 0 0 0 3px #FDF0D7; }
+  .row .status.past { background: #C3C9D2; }
+  .row .nm { flex: 1; min-width: 0; }
+  .row .nm .t { font-size: 14.5px; font-weight: 600; }
+  .row .nm .s { font-size: 12px; color: #8B93A1; margin-top: 1px; }
+  .row .meta { text-align: right; flex-shrink: 0; }
+  .row .meta .d { font-size: 12px; color: #5B6472; }
+  .row .meta .d.mono { font-size: 11.5px; }
+  .row .meta .n { font-size: 12px; color: #1A75D1; font-weight: 600; }
+  .row .chev { color: #C3C9D2; font-size: 16px; flex-shrink: 0; }
+  #pastList .row { display: none; }
+  #pastList.open .row { display: flex; }
+
+  footer { margin: 26px 16px 0; text-align: center; font-size: 11px; color: #A6ADB8; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <header>
+    <div class="mark">W</div>
+    <div class="appname">Wanderaid<small>▲ cloud</small></div>
+    <div class="spacer"></div>
+    <button class="icon-btn" title="Join trip by code">⇥</button>
+    <button class="icon-btn primary">+ New</button>
+  </header>
+
+  <div class="tabs" id="tabs">
+    <button class="on" data-filter="current">Current</button>
+    <button data-filter="upcoming">Upcoming</button>
+    <button data-filter="past">Past</button>
+  </div>
+
+  <section class="summary">
+    <div class="kicker">● Current trip</div>
+    <h2>Kyoto in the Fall</h2>
+    <div class="dest">Kyoto, Japan</div>
+    <div class="meta-grid">
+      <div class="cell"><div class="v mono">10/12–18</div><div class="l">Dates</div></div>
+      <div class="cell"><div class="v">5</div><div class="l">People</div></div>
+      <div class="cell"><div class="v">12</div><div class="l">Places</div></div>
+      <div class="cell"><div class="v mono">$1,240</div><div class="l">Spent</div></div>
+    </div>
+    <div class="actions">
+      <a class="btn-solid" href="#">Open trip →</a>
+      <a class="btn-ghost" href="#">Settle up</a>
+    </div>
+  </section>
+
+  <div class="list-head">All trips <span class="count" id="count">2 active</span></div>
+
+  <div id="tripList">
+    <a class="row" href="#" data-cat="current">
+      <span class="status live"></span>
+      <div class="nm"><div class="t">Kyoto in the Fall</div><div class="s">Kyoto, Japan</div></div>
+      <div class="meta"><div class="d mono">10/12–10/18</div><div class="n">5 people · $1,240</div></div>
+      <span class="chev">›</span>
+    </a>
+    <a class="row" href="#" data-cat="upcoming">
+      <span class="status up"></span>
+      <div class="nm"><div class="t">Big Sur Weekend</div><div class="s">Big Sur, CA</div></div>
+      <div class="meta"><div class="d mono">11/06–11/08</div><div class="n">4 people · 8 places</div></div>
+      <span class="chev">›</span>
+    </a>
+    <a class="row" href="#" data-cat="upcoming">
+      <span class="status up"></span>
+      <div class="nm"><div class="t">Lake Tahoe Reunion</div><div class="s">Lake Tahoe, CA</div></div>
+      <div class="meta"><div class="d mono">12/18–12/21</div><div class="n">7 people</div></div>
+      <span class="chev">›</span>
+    </a>
+    <div id="pastList">
+      <a class="row" href="#" data-cat="past">
+        <span class="status past"></span>
+        <div class="nm"><div class="t">Lake Tahoe</div><div class="s">May 2026</div></div>
+        <div class="meta"><div class="n">6 people</div></div>
+        <span class="chev">›</span>
+      </a>
+      <a class="row" href="#" data-cat="past">
+        <span class="status past"></span>
+        <div class="nm"><div class="t">Portland Food Tour</div><div class="s">Mar 2026</div></div>
+        <div class="meta"><div class="n">4 people</div></div>
+        <span class="chev">›</span>
+      </a>
+      <a class="row" href="#" data-cat="past">
+        <span class="status past"></span>
+        <div class="nm"><div class="t">Yosemite Camping</div><div class="s">Sep 2025</div></div>
+        <div class="meta"><div class="n">8 people</div></div>
+        <span class="chev">›</span>
+      </a>
+    </div>
+  </div>
+
+  <footer>Wanderaid · design exploration — sample data only</footer>
+</div>
+
+<script>
+  (function () {
+    var tabs = document.getElementById('tabs');
+    var pastList = document.getElementById('pastList');
+    var count = document.getElementById('count');
+    var catMap = { current: 1, upcoming: 2, past: 3 };
+    tabs.addEventListener('click', function (e) {
+      var btn = e.target.closest('button');
+      if (!btn) return;
+      Array.prototype.forEach.call(tabs.children, function (b) { b.classList.remove('on'); });
+      btn.classList.add('on');
+      var filter = btn.dataset.filter;
+      var rows = document.querySelectorAll('#tripList .row');
+      var shown = 0;
+      Array.prototype.forEach.call(rows, function (r) {
+        if (filter === 'current' && r.dataset.cat !== 'current') { r.style.display = 'none'; return; }
+        if (filter === 'upcoming' && r.dataset.cat !== 'upcoming') { r.style.display = 'none'; return; }
+        if (filter === 'past') {
+          pastList.classList.add('open');
+          r.style.display = 'flex';
+          shown++;
+          return;
+        }
+        r.style.display = 'flex';
+        shown++;
+      });
+      if (filter !== 'past') pastList.classList.remove('open');
+      count.textContent = shown + (shown === 1 ? ' trip' : ' trips');
+    });
+  })();
+</script>
+</body>
+</html>
