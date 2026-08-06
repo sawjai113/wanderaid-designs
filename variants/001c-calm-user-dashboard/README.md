@@ -10,12 +10,15 @@ This keeps the Calm Editorial visual direction — paper tones, serif display ty
 - **Moved create/join actions:** `Create trip` and `Join by invite` now live inside the top-right profile dropdown.
 - **Added bottom navigation:** three primary destinations: `Dashboard`, `Current`, and `All Trips`.
 - **Reframed the page around the user:** the headline, surfaced metrics, money summary, and attention list are user-centered instead of trip-centered.
+- **Removed the oversized dashboard intro:** the page now starts directly with the current/next trip card to preserve space.
+- **Shrunk the featured trip card:** the card keeps visual prominence while leaving more room for dashboard content above the fold.
+- **Anchored the bottom nav:** the nav is attached to the bottom edge instead of floating above content.
 - **Changed “spent” semantics:** the money module now shows the user’s net outstanding balance, with drill-in rows for “owed to you” and “you owe.”
 - **Kept the large current/next trip card:** the current trip still visually anchors the page, but its surfaced detail is about what the user needs to do next.
 - **Kept past trips easy to find:** past trips stay on the dashboard as a collapsible section, and there is a permanent All Trips bottom-nav entry.
 
 ### Key dashboard modules
-1. **Featured current/next trip card** — still large and emotional, but with a user task/decision CTA.
+1. **Featured current/next trip card** — still prominent and emotional, but more compact and with a user task/decision CTA.
 2. **Your money across trips** — net outstanding, owed-to-you, and you-owe rows.
 3. **User metrics** — decisions, invites, and next-trip countdown.
 4. **Needs your attention** — actionable cross-trip tasks.
