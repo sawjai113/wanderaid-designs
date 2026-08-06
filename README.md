@@ -6,40 +6,59 @@ Interactive HTML design explorations for **Wanderaid** (Group Trip App). Every r
 
 https://sawjai113.github.io/wanderaid-designs/
 
-## How to review
+## Current direction
 
-- Open the live site (or `index.html` locally) — it embeds all variants in phone frames.
-- Click **Open full screen** on a variant to try it on a real phone.
-- Mockups are interactive: tabs, carousels, collapsible sections, modals.
-- All content is fake sample data.
+We are now focusing on the **Calm Editorial** direction only. The earlier Utilitarian Dense and Playful Social variants are no longer shown in the gallery so the review loop can focus on the selected visual language.
 
-## Variant rounds
+### Round 3 — Calm User Dashboard
 
-### Round 2 — Trip Dashboard refinement
-
-User-selected direction: **Variant 1 — Calm Editorial**.
+User feedback shifted the home page from a trip-centered landing page to a current-user dashboard.
 
 | # | Stance | One-liner |
 |---|--------|-----------|
-| 1b | **Calm Editorial Refined** | Keeps the warm travel-journal feel, but adds clearer app actions, a “today at a glance” anchor, quieter stats, and calm collaboration cues. |
+| 1c | **Calm User Dashboard** | Keeps the large current/next trip card and past-trip access, but surfaces user-centered info: net outstanding balance, decisions, personal next actions, profile-menu create/join, and bottom navigation. |
 
-Review first: [`variants/001b-calm-editorial-refined/index.html`](variants/001b-calm-editorial-refined/index.html)
+Review first: [`variants/001c-calm-user-dashboard/index.html`](variants/001c-calm-user-dashboard/index.html)
 
-### Round 1 — Trip Dashboard (home screen)
+Key design decisions:
+
+- The large current/next trip card remains, but its CTA and copy are user-action focused.
+- The old trip-level “spent” metric becomes a user-level **net outstanding** card.
+- Drill-in rows split money into **Owed to you** and **You owe** across trips.
+- Create/join actions move into the top-right profile dropdown.
+- Bottom navigation introduces `Dashboard`, `Current`, and `All Trips`.
+- Past trips stay easy to find, but no longer compete with the primary user dashboard.
+
+## Prior calm references
+
+### Round 2 — Trip Dashboard refinement
+
+| # | Stance | One-liner |
+|---|--------|-----------|
+| 1b | **Calm Editorial Refined** | Warm travel-journal feel with clearer app actions, a “today at a glance” anchor, quieter stats, and calm collaboration cues. |
+
+Reference: [`variants/001b-calm-editorial-refined/index.html`](variants/001b-calm-editorial-refined/index.html)
+
+### Round 1 — Trip Dashboard exploration
 
 | # | Stance | One-liner |
 |---|--------|-----------|
 | 1 | **Calm Editorial** | Travel-journal warmth: serif type, paper tones, forest-green accent, content-first. |
-| 2 | **Utilitarian Dense** | Tool-first console: compact rows, Current/Upcoming/Past tabs, mono numerals, one blue accent. |
-| 3 | **Playful Social** | Group-chat energy: avatar stacks, per-feature colors (people purple, places red, chat blue), activity feed, New Trip modal. |
 
-Each variant's `README.md` explains its stance, key choices, and trade-offs.
+Reference: [`variants/001-calm-editorial/index.html`](variants/001-calm-editorial/index.html)
+
+## How to review
+
+- Open the live site (or `index.html` locally) — it embeds the current calm variant plus prior calm references in phone frames.
+- Click **Open full screen** on a variant to try it on a real phone.
+- Mockups are interactive: profile menu and collapsible past trips.
+- All content is fake sample data.
 
 ## Workflow
 
-1. I build 2–3 stances per round from the real app structure.
-2. You pick a winner (or a hybrid) after reviewing on any device.
-3. The winning direction gets translated into SwiftUI + design tokens.
+1. I build/refine the selected direction from the real app structure.
+2. You review on any device and call out what feels right/wrong.
+3. Once the mockup feels close, the winning direction gets translated into SwiftUI + design tokens.
 
 ## Conventions
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wanderaid — Design Explorations</title>
+<title>Wanderaid — Calm Dashboard Designs</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -14,57 +14,55 @@
     line-height: 1.55;
   }
   .wrap { max-width: 1280px; margin: 0 auto; padding: 48px 24px 72px; }
-  header { max-width: 720px; margin-bottom: 40px; }
-  .kicker {
-    font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-    color: #8A6D4B; margin-bottom: 12px;
-  }
-  h1 { font-size: 40px; line-height: 1.1; letter-spacing: -0.02em; font-weight: 700; margin-bottom: 14px; }
+  header { max-width: 780px; margin-bottom: 26px; }
+  .kicker { font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #8A6D4B; margin-bottom: 12px; }
+  h1 { font-size: 42px; line-height: 1.08; letter-spacing: -0.03em; font-weight: 750; margin-bottom: 14px; }
   header p { font-size: 17px; color: #5C5750; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px; }
-  .card {
-    background: #FFFDF9; border: 1px solid #E8E2D8; border-radius: 20px; overflow: hidden;
-    display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(28,26,23,0.04), 0 12px 32px -20px rgba(28,26,23,0.25);
-  }
-  .stage {
-    height: 620px; overflow: hidden; position: relative; background: #EDEBE6;
-    display: flex; align-items: flex-start; justify-content: center; padding: 28px 0 0;
-  }
-  .stage iframe { width: 375px; height: 780px; border: 0; border-radius: 18px; transform: scale(0.72); transform-origin: top center; box-shadow: 0 0 0 1px rgba(0,0,0,0.12), 0 24px 48px -24px rgba(0,0,0,0.4); background: #fff; }
-  .card-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-  .stance { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #8A6D4B; }
-  .card h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
-  .card p { font-size: 14.5px; color: #5C5750; }
-  .card a {
-    margin-top: 10px; font-size: 14px; font-weight: 600; color: #fff; background: #1C1A17;
-    padding: 10px 16px; border-radius: 10px; text-decoration: none; align-self: flex-start;
-  }
-  .card a:hover { background: #3A352E; }
-  .card.winner { border-color: #C7AD7D; background: #FFFDF8; box-shadow: 0 1px 2px rgba(28,26,23,0.04), 0 22px 52px -28px rgba(47,104,78,0.42); }
-  .card.winner .stage { background: #E9E0D2; }
   .round-note { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 28px; padding: 10px 14px; border-radius: 999px; background: #FFFDF8; border: 1px solid #E0D0B5; color: #5C4B35; font-size: 13.5px; }
   .round-note strong { color: #2F684E; }
-  footer { margin-top: 48px; font-size: 13.5px; color: #8A857C; max-width: 720px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px; }
+  .card { background: #FFFDF9; border: 1px solid #E8E2D8; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(28,26,23,0.04), 0 12px 32px -20px rgba(28,26,23,0.25); }
+  .card.winner { border-color: #C7AD7D; box-shadow: 0 1px 2px rgba(28,26,23,0.04), 0 22px 52px -28px rgba(47,104,78,0.42); }
+  .stage { height: 650px; overflow: hidden; position: relative; background: #EDEBE6; display: flex; align-items: flex-start; justify-content: center; padding: 28px 0 0; }
+  .card.winner .stage { background: #E9E0D2; }
+  .stage iframe { width: 375px; height: 820px; border: 0; border-radius: 18px; transform: scale(0.72); transform-origin: top center; box-shadow: 0 0 0 1px rgba(0,0,0,0.12), 0 24px 48px -24px rgba(0,0,0,0.4); background: #fff; }
+  .card-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .stance { font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #8A6D4B; }
+  .card h2 { font-size: 22px; font-weight: 750; letter-spacing: -0.01em; }
+  .card p { font-size: 14.5px; color: #5C5750; }
+  .card a { margin-top: 10px; font-size: 14px; font-weight: 700; color: #fff; background: #1C1A17; padding: 10px 16px; border-radius: 10px; text-decoration: none; align-self: flex-start; }
+  .card a:hover { background: #3A352E; }
+  footer { margin-top: 48px; font-size: 13.5px; color: #8A857C; max-width: 760px; }
   footer code { background: #E9E4DA; padding: 1px 6px; border-radius: 6px; font-size: 12.5px; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div class="kicker">Wanderaid · Trip Dashboard · Round 2</div>
-    <h1>Variant 1 is the direction — now refining it</h1>
-    <p>You picked Calm Editorial: the warm travel-journal direction with paper tones, serif display type, and forest-green accents. Round 2 keeps that north star and makes it more app-real for SwiftUI implementation.</p>
+    <div class="kicker">Wanderaid · Calm Dashboard · Round 3</div>
+    <h1>Focusing the home page around the current user</h1>
+    <p>The selected direction is still Calm Editorial, but the dashboard now surfaces user-centered information: outstanding balances, decisions, next actions, current/next trip access, past trip discovery, a profile menu, and bottom navigation.</p>
   </header>
 
-  <div class="round-note"><strong>Current pick:</strong> Calm Editorial Refined · review this one first</div>
+  <div class="round-note"><strong>Review first:</strong> Calm User Dashboard · utilitarian/playful alternatives removed from the gallery</div>
 
   <div class="grid">
     <div class="card winner">
+      <div class="stage"><iframe src="variants/001c-calm-user-dashboard/index.html" title="Calm User Dashboard variant" loading="lazy"></iframe></div>
+      <div class="card-body">
+        <div class="stance">Round 3 · Current Direction</div>
+        <h2>Calm User Dashboard</h2>
+        <p>User-centered dashboard with a large current-trip card, net outstanding balance, needs-your-attention list, profile dropdown actions, past trips, and a bottom nav.</p>
+        <a href="variants/001c-calm-user-dashboard/index.html" target="_blank" rel="noopener">Open full screen →</a>
+      </div>
+    </div>
+
+    <div class="card">
       <div class="stage"><iframe src="variants/001b-calm-editorial-refined/index.html" title="Calm Editorial refined variant" loading="lazy"></iframe></div>
       <div class="card-body">
-        <div class="stance">Round 2 · Selected Direction</div>
+        <div class="stance">Round 2 Reference</div>
         <h2>Calm Editorial Refined</h2>
-        <p>Same warm journal feel, now with clearer app actions, a useful “today” section, quieter stats, and collaboration cues that stay calm.</p>
+        <p>The previous trip-centered refinement. Kept here as the baseline before shifting the page toward the current user.</p>
         <a href="variants/001b-calm-editorial-refined/index.html" target="_blank" rel="noopener">Open full screen →</a>
       </div>
     </div>
@@ -74,34 +72,14 @@
       <div class="card-body">
         <div class="stance">Round 1 Reference</div>
         <h2>Original Calm Editorial</h2>
-        <p>The first travel-journal concept: strong mood and simplicity, kept here as the baseline for comparison.</p>
+        <p>The first calm direction: warm travel-journal mood, large trip photography, paper tones, and forest-green accents.</p>
         <a href="variants/001-calm-editorial/index.html" target="_blank" rel="noopener">Open full screen →</a>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="stage"><iframe src="variants/002-utilitarian-dense/index.html" title="Utilitarian Dense variant" loading="lazy"></iframe></div>
-      <div class="card-body">
-        <div class="stance">Variant 2</div>
-        <h2>Utilitarian Dense</h2>
-        <p>Tool-first console: compact rows, tabbed Current/Past, mono numerals, one blue accent. Maximum information per pixel.</p>
-        <a href="variants/002-utilitarian-dense/index.html" target="_blank" rel="noopener">Open full screen →</a>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="stage"><iframe src="variants/003-playful-social/index.html" title="Playful Social variant" loading="lazy"></iframe></div>
-      <div class="card-body">
-        <div class="stance">Variant 3</div>
-        <h2>Playful Social</h2>
-        <p>Group-chat energy: avatar clusters, per-feature colors (people purple, places red, expenses blue), activity feed, a real New Trip modal.</p>
-        <a href="variants/003-playful-social/index.html" target="_blank" rel="noopener">Open full screen →</a>
       </div>
     </div>
   </div>
 
   <footer>
-    Source lives in <code>sawjai113/wanderaid-designs</code>. Every revision is a commit — pick a direction and I'll turn it into a SwiftUI implementation next.
+    Source lives in <code>sawjai113/wanderaid-designs</code>. The utilitarian and playful directions still exist in git history, but this gallery now focuses on the Calm direction only.
   </footer>
 </div>
 </body>
