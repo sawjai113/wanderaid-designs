@@ -40,6 +40,10 @@
     padding: 10px 16px; border-radius: 10px; text-decoration: none; align-self: flex-start;
   }
   .card a:hover { background: #3A352E; }
+  .card.winner { border-color: #C7AD7D; background: #FFFDF8; box-shadow: 0 1px 2px rgba(28,26,23,0.04), 0 22px 52px -28px rgba(47,104,78,0.42); }
+  .card.winner .stage { background: #E9E0D2; }
+  .round-note { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 28px; padding: 10px 14px; border-radius: 999px; background: #FFFDF8; border: 1px solid #E0D0B5; color: #5C4B35; font-size: 13.5px; }
+  .round-note strong { color: #2F684E; }
   footer { margin-top: 48px; font-size: 13.5px; color: #8A857C; max-width: 720px; }
   footer code { background: #E9E4DA; padding: 1px 6px; border-radius: 6px; font-size: 12.5px; }
 </style>
@@ -47,18 +51,30 @@
 <body>
 <div class="wrap">
   <header>
-    <div class="kicker">Wanderaid · Trip Dashboard · Round 1</div>
-    <h1>Three takes on the trip home screen</h1>
-    <p>Same screen, three different design stances. Open each on your phone or laptop, poke around, and tell me what feels right — we can merge, push further, or start a new direction. All content is fake sample data.</p>
+    <div class="kicker">Wanderaid · Trip Dashboard · Round 2</div>
+    <h1>Variant 1 is the direction — now refining it</h1>
+    <p>You picked Calm Editorial: the warm travel-journal direction with paper tones, serif display type, and forest-green accents. Round 2 keeps that north star and makes it more app-real for SwiftUI implementation.</p>
   </header>
 
+  <div class="round-note"><strong>Current pick:</strong> Calm Editorial Refined · review this one first</div>
+
   <div class="grid">
-    <div class="card">
-      <div class="stage"><iframe src="variants/001-calm-editorial/index.html" title="Calm Editorial variant" loading="lazy"></iframe></div>
+    <div class="card winner">
+      <div class="stage"><iframe src="variants/001b-calm-editorial-refined/index.html" title="Calm Editorial refined variant" loading="lazy"></iframe></div>
       <div class="card-body">
-        <div class="stance">Variant 1</div>
-        <h2>Calm Editorial</h2>
-        <p>Travel-journal warmth — serif display type, paper tones, a single forest-green accent. Content-first: the trip story leads, chrome disappears.</p>
+        <div class="stance">Round 2 · Selected Direction</div>
+        <h2>Calm Editorial Refined</h2>
+        <p>Same warm journal feel, now with clearer app actions, a useful “today” section, quieter stats, and collaboration cues that stay calm.</p>
+        <a href="variants/001b-calm-editorial-refined/index.html" target="_blank" rel="noopener">Open full screen →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="stage"><iframe src="variants/001-calm-editorial/index.html" title="Original Calm Editorial variant" loading="lazy"></iframe></div>
+      <div class="card-body">
+        <div class="stance">Round 1 Reference</div>
+        <h2>Original Calm Editorial</h2>
+        <p>The first travel-journal concept: strong mood and simplicity, kept here as the baseline for comparison.</p>
         <a href="variants/001-calm-editorial/index.html" target="_blank" rel="noopener">Open full screen →</a>
       </div>
     </div>

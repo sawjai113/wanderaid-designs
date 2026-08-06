@@ -15,6 +15,16 @@ https://sawjai113.github.io/wanderaid-designs/
 
 ## Variant rounds
 
+### Round 2 — Trip Dashboard refinement
+
+User-selected direction: **Variant 1 — Calm Editorial**.
+
+| # | Stance | One-liner |
+|---|--------|-----------|
+| 1b | **Calm Editorial Refined** | Keeps the warm travel-journal feel, but adds clearer app actions, a “today at a glance” anchor, quieter stats, and calm collaboration cues. |
+
+Review first: [`variants/001b-calm-editorial-refined/index.html`](variants/001b-calm-editorial-refined/index.html)
+
 ### Round 1 — Trip Dashboard (home screen)
 
 | # | Stance | One-liner |

@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wanderaid · Calm Editorial Refined</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --paper: #F7F2E8;
+    --paper-deep: #EEE4D4;
+    --card: #FFFDF8;
+    --ink: #261F17;
+    --muted: #796E60;
+    --soft: #AA9E8B;
+    --line: #E6D9C6;
+    --forest: #2F684E;
+    --forest-deep: #1F4F39;
+    --sand: #C58D53;
+    --sky: #668EA0;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: #E9E1D4;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .serif { font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; }
+  .phone {
+    max-width: 420px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top left, rgba(255,255,255,0.68), transparent 230px),
+      linear-gradient(180deg, #FBF7EF 0%, var(--paper) 52%, #F2E8DA 100%);
+    box-shadow: 0 0 0 1px rgba(38,31,23,0.08);
+    padding: 18px 18px 42px;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 2px 18px;
+  }
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: var(--forest);
+    color: #FFF9EE;
+    display: grid;
+    place-items: center;
+    font: 700 23px Georgia, serif;
+    box-shadow: 0 10px 24px -14px rgba(31,79,57,0.7);
+  }
+  .brand-copy { flex: 1; }
+  .wordmark { font-size: 24px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+  .wordmark span { color: var(--forest); }
+  .status { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .status b { color: var(--forest); font-weight: 700; }
+  .profile {
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    background: #E4D6C1;
+    color: var(--forest-deep);
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    border: 2px solid rgba(255,253,248,0.85);
+  }
+
+  .hero {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 22px 48px -32px rgba(38,31,23,0.55);
+  }
+  .photo-wrap { position: relative; }
+  .photo-wrap img {
+    width: 100%;
+    height: 278px;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(22,17,11,0.68) 0%, rgba(22,17,11,0.18) 46%, rgba(22,17,11,0.02) 100%);
+  }
+  .hero-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+    background: rgba(255,253,248,0.94);
+    color: var(--forest-deep);
+    padding: 6px 11px;
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .hero-title {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 16px;
+    z-index: 2;
+    color: #FFF9EE;
+  }
+  .hero-title h1 {
+    font-size: 31px;
+    line-height: 1.05;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .hero-title p { margin-top: 6px; font-size: 13.5px; color: rgba(255,249,238,0.84); }
+  .hero-body { padding: 17px 17px 18px; }
+  .quiet-note {
+    color: var(--muted);
+    font-size: 13.5px;
+    line-height: 1.45;
+    margin-bottom: 15px;
+  }
+  .hero-actions { display: flex; gap: 9px; }
+  .hero-actions a {
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 14px;
+    padding: 12px 10px;
+    font-size: 13.5px;
+    font-weight: 750;
+  }
+  .primary { color: #FFF9EE; background: var(--forest); box-shadow: 0 12px 22px -16px rgba(47,104,78,0.9); }
+  .secondary { color: var(--forest-deep); background: #EDF4EE; }
+
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 14px 0 22px;
+  }
+  .stat {
+    background: rgba(255,253,248,0.72);
+    border: 1px solid rgba(230,217,198,0.9);
+    border-radius: 16px;
+    padding: 11px 8px;
+  }
+  .stat .value { font-size: 16px; font-weight: 800; color: var(--ink); }
+  .stat .label {
+    margin-top: 2px;
+    font-size: 9.5px;
+    color: var(--soft);
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    white-space: nowrap;
+  }
+
+  .section { margin-top: 23px; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 0 2px 11px;
+  }
+  .section-head h2 {
+    font-size: 12px;
+    color: var(--soft);
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .section-head a, .section-head button {
+    border: 0;
+    background: none;
+    color: var(--forest);
+    font-size: 12.5px;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .today-card, .stack-card {
+    background: rgba(255,253,248,0.82);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .today-row {
+    display: flex;
+    gap: 13px;
+    padding: 15px;
+    align-items: flex-start;
+  }
+  .today-row + .today-row { border-top: 1px solid #EFE4D4; }
+  .time {
+    width: 52px;
+    color: var(--forest-deep);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: -0.01em;
+    padding-top: 2px;
+  }
+  .event { flex: 1; min-width: 0; }
+  .event h3 { font-size: 15px; font-weight: 750; }
+  .event p { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+  .event .tag {
+    display: inline-block;
+    margin-top: 8px;
+    color: var(--sand);
+    background: #F7ECDD;
+    border-radius: 999px;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: 750;
+  }
+
+  .upcoming-row {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 14px 15px;
+    color: inherit;
+    text-decoration: none;
+  }
+  .upcoming-row + .upcoming-row { border-top: 1px solid #EFE4D4; }
+  .thumb {
+    width: 54px;
+    height: 54px;
+    border-radius: 15px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .trip-meta { flex: 1; min-width: 0; }
+  .trip-meta h3 { font-size: 15px; font-weight: 750; }
+  .trip-meta p { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+  .trip-meta .mini-stats { color: var(--soft); font-size: 11.5px; margin-top: 4px; }
+  .chev { color: #BCAf9E; font-size: 20px; }
+
+  .journal {
+    background: #FEFBF4;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 15px;
+  }
+  .journal-item { display: flex; gap: 10px; align-items: flex-start; }
+  .journal-item + .journal-item { margin-top: 13px; padding-top: 13px; border-top: 1px dashed #E4D7C5; }
+  .pin {
+    width: 29px;
+    height: 29px;
+    border-radius: 10px;
+    background: #F1E6D5;
+    color: var(--forest-deep);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    font-size: 13px;
+  }
+  .journal-copy { font-size: 13px; color: var(--muted); }
+  .journal-copy b { color: var(--ink); }
+  .journal-copy .when { color: var(--soft); font-size: 11.5px; margin-top: 2px; display: block; }
+
+  #pastList { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.22,1,0.36,1); }
+  #pastList.open { max-height: 260px; }
+  .past-row {
+    display: flex;
+    padding: 13px 15px;
+    gap: 12px;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+  }
+  .past-row + .past-row { border-top: 1px solid #EFE4D4; }
+  .past-date { width: 64px; color: var(--soft); font-size: 11px; letter-spacing: 0.04em; }
+  .past-title { flex: 1; font-size: 14px; font-weight: 700; }
+  .past-count { color: var(--muted); font-size: 12px; }
+
+  .new-trip {
+    position: sticky;
+    bottom: 14px;
+    margin-top: 26px;
+    display: flex;
+    gap: 10px;
+  }
+  .new-trip a {
+    flex: 1;
+    text-align: center;
+    border-radius: 999px;
+    padding: 14px 14px;
+    text-decoration: none;
+    font-weight: 850;
+    font-size: 14px;
+    box-shadow: 0 16px 28px -20px rgba(38,31,23,0.6);
+  }
+  .join { background: #FFFDF8; color: var(--forest-deep); border: 1px solid var(--line); }
+  .create { background: var(--ink); color: #FFF9EE; }
+
+  footer { margin-top: 28px; text-align: center; color: var(--soft); font-size: 11px; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <header>
+    <div class="brand-mark">W</div>
+    <div class="brand-copy">
+      <div class="wordmark serif">Wanderaid<span>.</span></div>
+      <div class="status">Signed in · <b>Cloud synced</b></div>
+    </div>
+    <div class="profile">S</div>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Featured trip">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900" alt="Friends sitting together outdoors during a trip">
+        <div class="hero-badge">Current trip</div>
+        <div class="hero-title">
+          <h1 class="serif">Kyoto in the Fall</h1>
+          <p>Oct 12 – 18 · Kyoto, Japan</p>
+        </div>
+      </div>
+      <div class="hero-body">
+        <p class="quiet-note">A shared notebook for places, plans, expenses, and the small decisions that keep the trip moving.</p>
+        <div class="hero-actions">
+          <a class="primary" href="#">Open trip</a>
+          <a class="secondary" href="#">Invite people</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="stat-strip" aria-label="Trip summary stats">
+      <div class="stat"><div class="value">5</div><div class="label">People</div></div>
+      <div class="stat"><div class="value">12</div><div class="label">Places</div></div>
+      <div class="stat"><div class="value">48</div><div class="label">Notes</div></div>
+      <div class="stat"><div class="value">$1.2k</div><div class="label">Shared</div></div>
+    </div>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Today at a glance</h2>
+        <a href="#">Full itinerary</a>
+      </div>
+      <div class="today-card">
+        <div class="today-row">
+          <div class="time">9:30a</div>
+          <div class="event">
+            <h3>Arashiyama bamboo walk</h3>
+            <p>Meet at Saga-Arashiyama Station. Priya pinned the route.</p>
+            <span class="tag">3 people confirmed</span>
+          </div>
+        </div>
+        <div class="today-row">
+          <div class="time">7:00p</div>
+          <div class="event">
+            <h3>Dinner near Pontocho</h3>
+            <p>Maya added a reservation note. Split estimate: ¥8,000/person.</p>
+            <span class="tag">expense likely</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Coming up</h2>
+        <a href="#">See all</a>
+      </div>
+      <div class="stack-card">
+        <a class="upcoming-row" href="#">
+          <img class="thumb" src="https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=240" alt="Big Sur coastline">
+          <div class="trip-meta">
+            <h3>Big Sur Weekend</h3>
+            <p>Nov 6 – 8 · Big Sur, CA</p>
+            <div class="mini-stats">4 people · 8 places · 2 open decisions</div>
+          </div>
+          <span class="chev">›</span>
+        </a>
+        <a class="upcoming-row" href="#">
+          <img class="thumb" src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=240" alt="Lake and mountain view">
+          <div class="trip-meta">
+            <h3>Lake Tahoe Reunion</h3>
+            <p>Dec 18 – 21 · Lake Tahoe</p>
+            <div class="mini-stats">7 people · lodging vote open</div>
+          </div>
+          <span class="chev">›</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Shared journal</h2>
+        <a href="#">Open activity</a>
+      </div>
+      <div class="journal">
+        <div class="journal-item">
+          <div class="pin">✎</div>
+          <div class="journal-copy"><b>Maya</b> added Nishiki Market and marked it “must do.”<span class="when">2 hours ago</span></div>
+        </div>
+        <div class="journal-item">
+          <div class="pin">¥</div>
+          <div class="journal-copy"><b>Jonas</b> split the train passes with the group.<span class="when">Yesterday</span></div>
+        </div>
+        <div class="journal-item">
+          <div class="pin">?</div>
+          <div class="journal-copy"><b>Priya</b> asked whether Sunday should stay flexible.<span class="when">Yesterday</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Past trips</h2>
+        <button id="pastToggle" aria-expanded="false">Show 3</button>
+      </div>
+      <div class="stack-card" id="pastList">
+        <a class="past-row" href="#"><span class="past-date">May ’26</span><span class="past-title">Lake Tahoe</span><span class="past-count">6 people</span></a>
+        <a class="past-row" href="#"><span class="past-date">Mar ’26</span><span class="past-title">Portland Food Tour</span><span class="past-count">4 people</span></a>
+        <a class="past-row" href="#"><span class="past-date">Sep ’25</span><span class="past-title">Yosemite Camping</span><span class="past-count">8 people</span></a>
+      </div>
+    </section>
+
+    <div class="new-trip" aria-label="Trip actions">
+      <a class="join" href="#">Join by invite</a>
+      <a class="create" href="#">Create trip</a>
+    </div>
+  </main>
+
+  <footer>Round 2 refinement · Calm Editorial direction</footer>
+</div>
+
+<script>
+  (function () {
+    var t = document.getElementById('pastToggle');
+    var l = document.getElementById('pastList');
+    t.addEventListener('click', function () {
+      var open = l.classList.toggle('open');
+      t.setAttribute('aria-expanded', open ? 'true' : 'false');
+      t.textContent = open ? 'Hide' : 'Show 3';
+    });
+  })();
+</script>
+</body>
+</html>
