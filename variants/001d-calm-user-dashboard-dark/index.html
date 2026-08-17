@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wanderaid · Calm User Dashboard Dark</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --paper: #12100E;
+    --paper-deep: #1B1713;
+    --card: #1C1813;
+    --ink: #F6EEE1;
+    --muted: #B8A991;
+    --soft: #8F806A;
+    --line: #3A3127;
+    --forest: #83C59B;
+    --forest-deep: #BDECCB;
+    --sand: #D9A767;
+    --owed: #E28B67;
+    --due: #83C59B;
+    --tab: #30281F;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: #090806;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .serif { font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; }
+  .phone {
+    max-width: 420px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top left, rgba(131,197,155,0.16), transparent 240px),
+      linear-gradient(180deg, #1A1510 0%, var(--paper) 56%, #0E0C0A 100%);
+    box-shadow: 0 0 0 1px rgba(255,246,230,0.08);
+    padding: 18px 18px 96px;
+    position: relative;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 2px 18px;
+    position: relative;
+    z-index: 10;
+  }
+  .brand-copy { flex: 1; min-width: 0; }
+  .wordmark { font-size: 25px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+  .wordmark span { color: var(--forest); }
+  .status { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .status b { color: var(--forest); font-weight: 700; }
+  .profile-wrap { position: relative; }
+  .profile {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 999px;
+    background: #2D261E;
+    color: var(--forest-deep);
+    display: grid;
+    place-items: center;
+    font-weight: 850;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 2px rgba(255,246,230,0.12);
+  }
+  .menu {
+    position: absolute;
+    right: 0;
+    top: 48px;
+    min-width: 210px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 8px;
+    box-shadow: 0 18px 42px -24px rgba(0,0,0,0.85);
+    transform-origin: top right;
+    transform: scale(0.96);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.16s, transform 0.16s;
+  }
+  .menu.open { opacity: 1; transform: scale(1); pointer-events: auto; }
+  .menu a {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 11px 12px;
+    color: var(--ink);
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 13.5px;
+    font-weight: 700;
+  }
+  .menu a:hover { background: #2B241C; }
+  .menu .hint { display: block; font-size: 11.5px; font-weight: 500; color: var(--muted); margin-top: 1px; }
+  .menu-ico { width: 24px; height: 24px; border-radius: 9px; display: grid; place-items: center; background: #2B241C; color: var(--forest-deep); flex-shrink: 0; }
+  .menu-rule { height: 1px; background: #332A21; margin: 6px 4px; }
+
+  .hero {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 24px 54px -30px rgba(0,0,0,0.95);
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+  .hero:active { transform: scale(0.992); }
+  .photo-wrap { position: relative; }
+  .photo-wrap img { width: 100%; height: 188px; object-fit: cover; display: block; }
+  .photo-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(4,4,3,0.82) 0%, rgba(4,4,3,0.32) 48%, rgba(4,4,3,0.08) 100%);
+  }
+  .hero-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+    background: rgba(20,17,14,0.82);
+    color: var(--forest-deep);
+    border: 1px solid rgba(131,197,155,0.22);
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .hero-title { position: absolute; left: 16px; right: 16px; bottom: 14px; z-index: 2; color: #FFF3DF; }
+  .hero-title h2 { font-size: 25px; line-height: 1.05; font-weight: 600; letter-spacing: -0.02em; }
+  .hero-title p { margin-top: 6px; font-size: 13.5px; color: rgba(255,249,238,0.84); }
+  .hero-body { padding: 13px 15px 14px; }
+  .quiet-note { color: var(--muted); font-size: 13px; line-height: 1.4; }
+  .quiet-note b { color: var(--forest-deep); font-weight: 850; }
+
+  .section { margin-top: 23px; }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; margin: 0 2px 11px; }
+  .section-head h2 { font-size: 12px; color: var(--soft); font-weight: 850; letter-spacing: 0.16em; text-transform: uppercase; }
+  .section-head a, .section-head button { border: 0; background: none; color: var(--forest); font-size: 12.5px; font-weight: 850; text-decoration: none; cursor: pointer; }
+
+  .balance-card {
+    background: linear-gradient(180deg, #211B15 0%, var(--card) 100%);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 17px;
+    box-shadow: 0 18px 38px -28px rgba(0,0,0,0.9);
+  }
+  .balance-top { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
+  .balance-label { color: var(--soft); font-size: 10.5px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 900; }
+  .balance-amount { font-size: 34px; line-height: 1; margin-top: 6px; font-weight: 700; letter-spacing: -0.04em; color: var(--forest-deep); }
+  .balance-context { color: var(--muted); font-size: 12.5px; margin-top: 6px; }
+  .balance-pill { background: #1F2C23; color: var(--forest-deep); border-radius: 999px; padding: 7px 10px; font-size: 11.5px; font-weight: 850; white-space: nowrap; }
+  .balance-breakdown { margin-top: 15px; display: grid; gap: 9px; }
+  .money-row { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 16px; background: #251F18; text-decoration: none; color: inherit; }
+  .money-row .dot { width: 10px; height: 10px; border-radius: 999px; flex-shrink: 0; }
+  .money-row .dot.owe { background: var(--owed); }
+  .money-row .dot.due { background: var(--due); }
+  .money-copy { flex: 1; min-width: 0; }
+  .money-copy b { font-size: 14px; }
+  .money-copy span { display: block; color: var(--muted); font-size: 12px; margin-top: 1px; }
+  .money-amount { font-size: 14px; font-weight: 900; color: var(--ink); }
+
+  .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 12px; }
+  .metric { background: rgba(28,24,19,0.82); border: 1px solid rgba(83,69,54,0.9); border-radius: 17px; padding: 12px 10px; }
+  .metric .value { font-size: 16px; font-weight: 900; color: var(--ink); }
+  .metric .label { margin-top: 3px; color: var(--soft); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800; }
+
+  .card-list { background: rgba(28,24,19,0.86); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+  .action-row { display: flex; gap: 13px; align-items: flex-start; padding: 15px; color: inherit; text-decoration: none; }
+  .action-row + .action-row { border-top: 1px solid #332A21; }
+  .action-icon { width: 34px; height: 34px; border-radius: 12px; display: grid; place-items: center; flex-shrink: 0; background: #2C241C; color: var(--forest-deep); font-weight: 900; }
+  .action-copy { flex: 1; min-width: 0; }
+  .action-copy h3 { font-size: 14.5px; font-weight: 800; }
+  .action-copy p { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+  .chev { color: #74685A; font-size: 20px; }
+
+  .trip-row { display: flex; align-items: center; gap: 13px; padding: 14px 15px; color: inherit; text-decoration: none; }
+  .trip-row + .trip-row { border-top: 1px solid #332A21; }
+  .thumb { width: 54px; height: 54px; border-radius: 15px; object-fit: cover; flex-shrink: 0; }
+  .trip-meta { flex: 1; min-width: 0; }
+  .trip-meta h3 { font-size: 15px; font-weight: 800; }
+  .trip-meta p { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+  .trip-meta .mini-stats { color: var(--soft); font-size: 11.5px; margin-top: 4px; }
+
+  #pastList { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.22,1,0.36,1); }
+  #pastList.open { max-height: 320px; }
+  .past-row { display: flex; padding: 13px 15px; gap: 12px; align-items: center; text-decoration: none; color: inherit; }
+  .past-row + .past-row { border-top: 1px solid #332A21; }
+  .past-date { width: 64px; color: var(--soft); font-size: 11px; letter-spacing: 0.04em; }
+  .past-title { flex: 1; font-size: 14px; font-weight: 750; }
+  .past-summary { color: var(--muted); font-size: 12px; }
+
+  .bottom-nav {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: min(420px, 100vw);
+    background: rgba(24,20,16,0.96);
+    border: 1px solid rgba(70,58,45,0.95);
+    border-bottom: 0;
+    border-radius: 22px 22px 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    padding: 7px 12px 10px;
+    box-shadow: 0 -14px 36px -26px rgba(0,0,0,0.95);
+    backdrop-filter: blur(16px);
+    z-index: 20;
+  }
+  .nav-item { display: grid; place-items: center; gap: 3px; padding: 9px 4px; border-radius: 18px; color: var(--muted); text-decoration: none; font-size: 11px; font-weight: 800; }
+  .nav-item .ico { font-size: 17px; line-height: 1; }
+  .nav-item.active { background: var(--tab); color: var(--forest-deep); }
+
+  footer { margin-top: 28px; text-align: center; color: var(--soft); font-size: 11px; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <header>
+    <div class="brand-copy">
+      <div class="wordmark serif">Wanderaid<span>.</span></div>
+      <div class="status">Good morning · <b>Cloud synced</b></div>
+    </div>
+    <div class="profile-wrap">
+      <button class="profile" id="profileButton" aria-expanded="false" aria-haspopup="true">S</button>
+      <nav class="menu" id="profileMenu" aria-label="Profile menu">
+        <a href="#"><span class="menu-ico">＋</span><span>Create trip<span class="hint">Start a shared trip hub</span></span></a>
+        <a href="#"><span class="menu-ico">↗</span><span>Join by invite<span class="hint">Use a link or join code</span></span></a>
+        <div class="menu-rule"></div>
+        <a href="#"><span class="menu-ico">⚙</span><span>Account settings<span class="hint">Profile, sync, sign out</span></span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <a class="hero" href="#" aria-label="Open current trip: Kyoto in the Fall">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900" alt="Friends sitting together outdoors during a trip">
+        <div class="hero-badge">Current trip</div>
+        <div class="hero-title">
+          <h2 class="serif">Kyoto in the Fall</h2>
+          <p>Oct 12 – 18 · Kyoto, Japan</p>
+        </div>
+      </div>
+      <div class="hero-body">
+        <p class="quiet-note">Your next group decision is dinner on Friday. Two friends are waiting on your vote. <b>Tap to open →</b></p>
+      </div>
+    </a>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Needs your attention</h2>
+        <a href="#">View all</a>
+      </div>
+      <div class="card-list">
+        <a class="action-row" href="#">
+          <span class="action-icon">?</span>
+          <span class="action-copy"><h3>Pick Friday dinner</h3><p>Kyoto · Maya and Priya already voted.</p></span>
+          <span class="chev">›</span>
+        </a>
+        <a class="action-row" href="#">
+          <span class="action-icon">¥</span>
+          <span class="action-copy"><h3>Review train-pass split</h3><p>Jonas says your share changed by $18.</p></span>
+          <span class="chev">›</span>
+        </a>
+        <a class="action-row" href="#">
+          <span class="action-icon">✓</span>
+          <span class="action-copy"><h3>Confirm Big Sur lodging</h3><p>Deposit due tomorrow if everyone agrees.</p></span>
+          <span class="chev">›</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Your money across trips</h2>
+        <a href="#">Drill in</a>
+      </div>
+      <div class="balance-card">
+        <div class="balance-top">
+          <div>
+            <div class="balance-label">Net outstanding</div>
+            <div class="balance-amount serif">$86</div>
+            <div class="balance-context">You’re owed overall after current splits settle.</div>
+          </div>
+          <div class="balance-pill">3 trips</div>
+        </div>
+        <div class="balance-breakdown">
+          <a class="money-row" href="#">
+            <span class="dot due"></span>
+            <span class="money-copy"><b>Owed to you</b><span>Kyoto dinner, Tahoe cabin deposit</span></span>
+            <span class="money-amount">$142</span>
+          </a>
+          <a class="money-row" href="#">
+            <span class="dot owe"></span>
+            <span class="money-copy"><b>You owe</b><span>Big Sur groceries and park pass</span></span>
+            <span class="money-amount">$56</span>
+          </a>
+        </div>
+      </div>
+      <div class="metric-grid" aria-label="User dashboard metrics">
+        <div class="metric"><div class="value">4</div><div class="label">Decisions</div></div>
+        <div class="metric"><div class="value">2</div><div class="label">Invites</div></div>
+        <div class="metric"><div class="value">2</div><div class="label">Future trips</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Current & future trips</h2>
+        <a href="#">Trip tab</a>
+      </div>
+      <div class="card-list">
+        <a class="trip-row" href="#">
+          <img class="thumb" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=240" alt="Friends together">
+          <div class="trip-meta"><h3>Kyoto in the Fall</h3><p>Current · 5 people · 12 places</p><div class="mini-stats">2 decisions · you’re owed $74</div></div>
+          <span class="chev">›</span>
+        </a>
+        <a class="trip-row" href="#">
+          <img class="thumb" src="https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=240" alt="Big Sur coastline">
+          <div class="trip-meta"><h3>Big Sur Weekend</h3><p>Future · Nov 6 – 8 · 4 people</p><div class="mini-stats">lodging vote · you owe $56</div></div>
+          <span class="chev">›</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Past trips</h2>
+        <button id="pastToggle" aria-expanded="false">Show 3</button>
+      </div>
+      <div class="card-list" id="pastList">
+        <a class="past-row" href="#"><span class="past-date">May ’26</span><span class="past-title">Lake Tahoe</span><span class="past-summary">settled · 6 people</span></a>
+        <a class="past-row" href="#"><span class="past-date">Mar ’26</span><span class="past-title">Portland Food Tour</span><span class="past-summary">$12 owed · 4 people</span></a>
+        <a class="past-row" href="#"><span class="past-date">Sep ’25</span><span class="past-title">Yosemite Camping</span><span class="past-summary">settled · 8 people</span></a>
+      </div>
+    </section>
+
+    <footer>Round 3 · user-centered calm dashboard · dark mode</footer>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Primary navigation">
+    <a class="nav-item active" href="#"><span class="ico">⌂</span><span>Dashboard</span></a>
+    <a class="nav-item" href="#"><span class="ico">◆</span><span>Current</span></a>
+    <a class="nav-item" href="#"><span class="ico">☰</span><span>All Trips</span></a>
+  </nav>
+</div>
+
+<script>
+  (function () {
+    var profileButton = document.getElementById('profileButton');
+    var profileMenu = document.getElementById('profileMenu');
+    profileButton.addEventListener('click', function () {
+      var open = profileMenu.classList.toggle('open');
+      profileButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.profile-wrap')) {
+        profileMenu.classList.remove('open');
+        profileButton.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    var t = document.getElementById('pastToggle');
+    var l = document.getElementById('pastList');
+    t.addEventListener('click', function () {
+      var open = l.classList.toggle('open');
+      t.setAttribute('aria-expanded', open ? 'true' : 'false');
+      t.textContent = open ? 'Hide' : 'Show 3';
+    });
+  })();
+</script>
+</body>
+</html>

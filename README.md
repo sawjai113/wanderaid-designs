@@ -16,18 +16,24 @@ User feedback shifted the home page from a trip-centered landing page to a curre
 
 | # | Stance | One-liner |
 |---|--------|-----------|
-| 1c | **Calm User Dashboard** | Keeps the large current/next trip card and past-trip access, but surfaces user-centered info: net outstanding balance, decisions, personal next actions, profile-menu create/join, and bottom navigation. |
+| 1c | **Calm User Dashboard** | Keeps the tappable current/future trip card and past-trip access, but surfaces user-centered info: net outstanding balance, decisions, personal actions, profile-menu create/join, and bottom navigation. |
+| 1d | **Calm User Dashboard Dark** | Same dashboard structure translated into warm dark surfaces with cream typography, subdued borders, and forest-green highlights. |
 
-Review first: [`variants/001c-calm-user-dashboard/index.html`](variants/001c-calm-user-dashboard/index.html)
+Review first:
+
+- Light: [`variants/001c-calm-user-dashboard/index.html`](variants/001c-calm-user-dashboard/index.html)
+- Dark: [`variants/001d-calm-user-dashboard-dark/index.html`](variants/001d-calm-user-dashboard-dark/index.html)
 
 Key design decisions:
 
-- The large current/next trip card remains, but its CTA and copy are user-action focused.
+- The current trip card remains visually prominent, but the whole card is tappable instead of using internal buttons.
 - The old trip-level “spent” metric becomes a user-level **net outstanding** card.
 - Drill-in rows split money into **Owed to you** and **You owe** across trips.
+- **Needs your attention** appears above the money card so actionable items lead.
 - Create/join actions move into the top-right profile dropdown.
-- Bottom navigation introduces `Dashboard`, `Current`, and `All Trips`.
+- Bottom navigation introduces `Dashboard`, `Current`, and `All Trips`, anchored to the bottom edge.
 - Past trips stay easy to find, but no longer compete with the primary user dashboard.
+- Dark mode should preserve the same information hierarchy instead of becoming a separate layout.
 
 ## Prior calm references
 
@@ -49,9 +55,9 @@ Reference: [`variants/001-calm-editorial/index.html`](variants/001-calm-editoria
 
 ## How to review
 
-- Open the live site (or `index.html` locally) — it embeds the current calm variant plus prior calm references in phone frames.
+- Open the live site (or `index.html` locally) — it embeds the current calm variants plus prior calm references in phone frames.
 - Click **Open full screen** on a variant to try it on a real phone.
-- Mockups are interactive: profile menu and collapsible past trips.
+- Mockups are interactive: profile menu, tappable current trip card, and collapsible past trips.
 - All content is fake sample data.
 
 ## Workflow
