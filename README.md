@@ -6,9 +6,16 @@ Interactive HTML design explorations for **Wanderaid** (Group Trip App). Every r
 
 https://sawjai113.github.io/wanderaid-designs/
 
-## Current direction
+## Selected direction
 
-We are now focusing on the **Calm Editorial** direction only. The earlier Utilitarian Dense and Playful Social variants are no longer shown in the gallery so the review loop can focus on the selected visual language.
+The selected app direction is the **Calm User Dashboard** in the Calm Editorial visual language. Light and dark mockups are ready to use as implementation references for the Wanderaid app.
+
+The earlier Utilitarian Dense and Playful Social variants are no longer shown in the gallery so future work can focus on the approved direction.
+
+Implementation tracking:
+
+- App spec: `Group Trip App/docs/plans/calm-user-dashboard-design-direction.md`
+- GitHub issue: https://github.com/sawjai113/GroupTrip/issues/1
 
 ### Round 3 — Calm User Dashboard
 
