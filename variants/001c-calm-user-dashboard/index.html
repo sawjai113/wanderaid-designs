@@ -108,7 +108,11 @@
     border-radius: 28px;
     overflow: hidden;
     box-shadow: 0 22px 48px -32px rgba(38,31,23,0.55);
+    display: block;
+    color: inherit;
+    text-decoration: none;
   }
+  .hero:active { transform: scale(0.992); }
   .photo-wrap { position: relative; }
   .photo-wrap img { width: 100%; height: 188px; object-fit: cover; display: block; }
   .photo-wrap::after {
@@ -135,11 +139,8 @@
   .hero-title h2 { font-size: 25px; line-height: 1.05; font-weight: 600; letter-spacing: -0.02em; }
   .hero-title p { margin-top: 6px; font-size: 13.5px; color: rgba(255,249,238,0.84); }
   .hero-body { padding: 13px 15px 14px; }
-  .quiet-note { color: var(--muted); font-size: 13px; line-height: 1.4; margin-bottom: 11px; }
-  .hero-actions { display: flex; gap: 9px; }
-  .hero-actions a { flex: 1; text-align: center; text-decoration: none; border-radius: 13px; padding: 10px 10px; font-size: 13px; font-weight: 800; }
-  .primary { color: #FFF9EE; background: var(--forest); box-shadow: 0 12px 22px -16px rgba(47,104,78,0.9); }
-  .secondary { color: var(--forest-deep); background: #EDF4EE; }
+  .quiet-note { color: var(--muted); font-size: 13px; line-height: 1.4; }
+  .quiet-note b { color: var(--forest-deep); font-weight: 850; }
 
   .section { margin-top: 23px; }
   .section-head { display: flex; align-items: baseline; justify-content: space-between; margin: 0 2px 11px; }
@@ -242,7 +243,7 @@
   </header>
 
   <main>
-    <section class="hero" aria-label="Featured trip">
+    <a class="hero" href="#" aria-label="Open current trip: Kyoto in the Fall">
       <div class="photo-wrap">
         <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900" alt="Friends sitting together outdoors during a trip">
         <div class="hero-badge">Current trip</div>
@@ -252,11 +253,31 @@
         </div>
       </div>
       <div class="hero-body">
-        <p class="quiet-note">Your next group decision is dinner on Friday. Two friends are waiting on your vote.</p>
-        <div class="hero-actions">
-          <a class="primary" href="#">Open current trip</a>
-          <a class="secondary" href="#">Vote now</a>
-        </div>
+        <p class="quiet-note">Your next group decision is dinner on Friday. Two friends are waiting on your vote. <b>Tap to open →</b></p>
+      </div>
+    </a>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Needs your attention</h2>
+        <a href="#">View all</a>
+      </div>
+      <div class="card-list">
+        <a class="action-row" href="#">
+          <span class="action-icon">?</span>
+          <span class="action-copy"><h3>Pick Friday dinner</h3><p>Kyoto · Maya and Priya already voted.</p></span>
+          <span class="chev">›</span>
+        </a>
+        <a class="action-row" href="#">
+          <span class="action-icon">¥</span>
+          <span class="action-copy"><h3>Review train-pass split</h3><p>Jonas says your share changed by $18.</p></span>
+          <span class="chev">›</span>
+        </a>
+        <a class="action-row" href="#">
+          <span class="action-icon">✓</span>
+          <span class="action-copy"><h3>Confirm Big Sur lodging</h3><p>Deposit due tomorrow if everyone agrees.</p></span>
+          <span class="chev">›</span>
+        </a>
       </div>
     </section>
 
@@ -290,37 +311,13 @@
       <div class="metric-grid" aria-label="User dashboard metrics">
         <div class="metric"><div class="value">4</div><div class="label">Decisions</div></div>
         <div class="metric"><div class="value">2</div><div class="label">Invites</div></div>
-        <div class="metric"><div class="value">7d</div><div class="label">Next trip</div></div>
+        <div class="metric"><div class="value">2</div><div class="label">Future trips</div></div>
       </div>
     </section>
 
     <section class="section">
       <div class="section-head">
-        <h2>Needs your attention</h2>
-        <a href="#">View all</a>
-      </div>
-      <div class="card-list">
-        <a class="action-row" href="#">
-          <span class="action-icon">?</span>
-          <span class="action-copy"><h3>Pick Friday dinner</h3><p>Kyoto · Maya and Priya already voted.</p></span>
-          <span class="chev">›</span>
-        </a>
-        <a class="action-row" href="#">
-          <span class="action-icon">¥</span>
-          <span class="action-copy"><h3>Review train-pass split</h3><p>Jonas says your share changed by $18.</p></span>
-          <span class="chev">›</span>
-        </a>
-        <a class="action-row" href="#">
-          <span class="action-icon">✓</span>
-          <span class="action-copy"><h3>Confirm Big Sur lodging</h3><p>Deposit due tomorrow if everyone agrees.</p></span>
-          <span class="chev">›</span>
-        </a>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <h2>Current & next trip</h2>
+        <h2>Current & future trips</h2>
         <a href="#">Trip tab</a>
       </div>
       <div class="card-list">
@@ -331,7 +328,7 @@
         </a>
         <a class="trip-row" href="#">
           <img class="thumb" src="https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=240" alt="Big Sur coastline">
-          <div class="trip-meta"><h3>Big Sur Weekend</h3><p>Next · Nov 6 – 8 · 4 people</p><div class="mini-stats">lodging vote · you owe $56</div></div>
+          <div class="trip-meta"><h3>Big Sur Weekend</h3><p>Future · Nov 6 – 8 · 4 people</p><div class="mini-stats">lodging vote · you owe $56</div></div>
           <span class="chev">›</span>
         </a>
       </div>
