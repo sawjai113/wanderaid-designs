@@ -6,6 +6,7 @@ A dark-mode companion to the selected Calm User Dashboard. It keeps the same use
 ### What changed from light mode
 - **Same structure:** no UX changes from the current selected dashboard.
 - **Dark palette:** warm near-black background, dark card surfaces, subdued borders, and cream typography.
+- **Slightly lifted surfaces:** lighter cards, rows, icons, and bottom nav so interactive areas stand out a bit more against the dark background.
 - **Accessible contrast:** primary text and key controls stay high-contrast while secondary metadata remains quieter.
 - **Reduced glare:** cards and nav are anchored in dark translucent surfaces instead of bright paper.
 - **Hero image overlay strengthened:** title and trip metadata remain readable over photography.
