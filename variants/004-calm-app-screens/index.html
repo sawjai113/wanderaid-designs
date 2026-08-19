@@ -91,18 +91,27 @@
   }
   .screen { display: none; min-height: 810px; padding: 18px 18px 96px; }
   .screen.active { display: block; }
-  .topbar { display: flex; gap: 12px; align-items: center; padding: 4px 2px 16px; }
+  .topbar { display: flex; gap: 12px; align-items: center; padding: 4px 0 16px; }
   .back, .avatar {
     width: 40px; height: 40px; border: 0; border-radius: 999px; background: var(--card); color: var(--forest-deep);
     display: grid; place-items: center; font-weight: 900; box-shadow: inset 0 0 0 1px var(--line);
   }
   .back {
-    width: 44px;
-    height: 44px;
-    font-size: 28px;
-    line-height: 1;
-    padding-bottom: 3px;
+    position: relative;
+    font-size: 0;
+    line-height: 0;
     flex-shrink: 0;
+  }
+  .back::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-left: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    position: absolute;
+    left: 16px;
+    top: 14px;
   }
   .title-block { flex: 1; min-width: 0; }
   .title-block h2 { font-size: 24px; line-height: 1.02; letter-spacing: -0.035em; font-weight: 720; }
