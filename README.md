@@ -8,7 +8,7 @@ https://sawjai113.github.io/wanderaid-designs/
 
 ## Selected direction
 
-The selected app direction is the **Calm User Dashboard** in the Calm Editorial visual language. Light and dark mockups are ready to use as implementation references for the Wanderaid app.
+The selected app direction is the **Calm Editorial** visual language. It started with the Calm User Dashboard and now includes an app-wide Round 4 screen set for the major follow-on pages.
 
 The earlier Utilitarian Dense and Playful Social variants are no longer shown in the gallery so future work can focus on the approved direction.
 
@@ -16,6 +16,33 @@ Implementation tracking:
 
 - App spec: `Group Trip App/docs/plans/calm-user-dashboard-design-direction.md`
 - GitHub issue: https://github.com/sawjai113/GroupTrip/issues/1
+
+### Round 4 — Calm App Screens
+
+This screen set explores how the selected Calm Editorial direction scales beyond the dashboard.
+
+Review first:
+
+- App-wide screen set: [`variants/004-calm-app-screens/index.html`](variants/004-calm-app-screens/index.html)
+
+Included screens:
+
+- Current Trip / Trip Detail
+- All Trips
+- Expenses / Balances
+- People / Participants
+- Places
+- Itinerary / Planning
+- Create / Join / Invite
+- Confirmations / destructive actions
+
+Key design decisions:
+
+- Keep the same light/dark tokens and forest-green accent language across pages.
+- Use emotional trip/photo anchors on trip-level screens.
+- Prioritize current-user next actions, balances, roles, and decisions.
+- Prefer tappable rows/cards and contextual controls over repeated large buttons.
+- Give destructive confirmations enough room for shared-data safety copy.
 
 ### Round 3 — Calm User Dashboard
 

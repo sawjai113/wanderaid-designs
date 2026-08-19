@@ -21,6 +21,7 @@
   .round-note { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 28px; padding: 10px 14px; border-radius: 999px; background: #FFFDF8; border: 1px solid #E0D0B5; color: #5C4B35; font-size: 13.5px; }
   .round-note strong { color: #2F684E; }
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px; }
+  .grid.featured { margin-bottom: 28px; }
   .card { background: #FFFDF9; border: 1px solid #E8E2D8; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(28,26,23,0.04), 0 12px 32px -20px rgba(28,26,23,0.25); }
   .card.current { border-color: #C7AD7D; box-shadow: 0 1px 2px rgba(28,26,23,0.04), 0 22px 52px -28px rgba(47,104,78,0.42); }
   .stage { height: 650px; overflow: hidden; position: relative; background: #EDEBE6; display: flex; align-items: flex-start; justify-content: center; padding: 28px 0 0; }
@@ -47,11 +48,23 @@
 <div class="wrap">
   <header>
     <div class="kicker">Wanderaid · Selected App Direction</div>
-    <h1>Calm User Dashboard is ready for implementation</h1>
-    <p>The approved design direction is the Calm user-centered dashboard: outstanding balances, decisions, future-trip access, past trip discovery, a profile menu, tappable current-trip card, anchored bottom navigation, and matching light/dark appearances.</p>
+    <h1>Calm Editorial is becoming the app-wide system</h1>
+    <p>The approved direction started with the Calm user-centered dashboard. Round 4 extends the same visual and UX language across trip detail, all trips, expenses, people, places, itinerary, create/join, and confirmations.</p>
   </header>
 
-  <div class="round-note"><strong>Approved direction:</strong> use the light and dark mockups as app implementation references</div>
+  <div class="round-note"><strong>Approved direction:</strong> review the app-wide screen set first, then compare against the light/dark dashboard references</div>
+
+  <div class="grid featured">
+    <div class="card current">
+      <div class="stage"><iframe src="variants/004-calm-app-screens/index.html" title="Calm Editorial app screens" loading="lazy"></iframe></div>
+      <div class="card-body">
+        <div class="stance">Round 4 · App-wide system</div>
+        <h2>Calm App Screens</h2>
+        <p>Trip detail, all trips, expenses, people, places, itinerary, create/join, and confirmation patterns translated into the selected Calm Editorial design language with light/dark toggle.</p>
+        <a href="variants/004-calm-app-screens/index.html" target="_blank" rel="noopener">Open full screen →</a>
+      </div>
+    </div>
+  </div>
 
   <div class="grid">
     <div class="card current">
