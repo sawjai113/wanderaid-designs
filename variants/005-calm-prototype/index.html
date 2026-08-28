@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wanderaid · Calm Basecamp Prototype</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --site-bg: #F4F2EE;
+    --site-ink: #1C1A17;
+    --site-muted: #6B6258;
+    --paper: #F7F2E8;
+    --paper-deep: #EFE7D8;
+    --card: #FFFDF8;
+    --raised: #FFFFFF;
+    --ink: #261F17;
+    --muted: #796E60;
+    --soft: #9A8568;
+    --line: #E6D9C6;
+    --forest: #2F684E;
+    --forest-deep: #1F4F39;
+    --sand: #C58D53;
+    --owed: #A75F3B;
+    --due: #2F684E;
+    --tab: #EADCC5;
+    --shadow: rgba(28,26,23,0.22);
+    --danger: #B7573E;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: var(--site-bg);
+    color: var(--site-ink);
+    line-height: 1.45;
+  }
+  button { font: inherit; }
+  .serif { font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 18px 48px; }
+  .page-head { display: grid; gap: 12px; margin-bottom: 22px; max-width: 820px; }
+  .kicker, .eyebrow { color: var(--sand); font-size: 10.5px; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; }
+  h1 { font-size: clamp(34px, 5vw, 58px); line-height: 0.96; letter-spacing: -0.045em; font-weight: 720; }
+  .page-head p { color: var(--site-muted); font-size: 16px; max-width: 760px; }
+  .review-grid { display: grid; grid-template-columns: minmax(320px, 430px) 1fr; gap: 30px; align-items: start; }
+  .phone-frame { display: flex; justify-content: center; position: sticky; top: 16px; }
+  .phone {
+    width: min(390px, 100%);
+    height: 844px;
+    border-radius: 36px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 22% 0%, rgba(47,104,78,0.18), transparent 260px),
+      linear-gradient(180deg, var(--paper-deep), var(--paper) 54%, var(--paper));
+    box-shadow: 0 38px 82px -44px var(--shadow), 0 0 0 1px rgba(230,217,198,0.86);
+    color: var(--ink);
+    position: relative;
+  }
+  .statusbar { height: 26px; padding: 9px 24px 0; display: flex; justify-content: space-between; color: var(--ink); font-size: 11px; font-weight: 800; opacity: 0.78; }
+  .phone-scroll { height: calc(844px - 26px - 76px); overflow-y: auto; padding: 12px 16px 22px; scrollbar-width: none; }
+  .phone-scroll::-webkit-scrollbar { display: none; }
+  .screen { display: none; animation: fade 0.16s ease-out; }
+  .screen.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  .topbar { display: flex; gap: 12px; align-items: flex-start; padding: 2px 0 14px; }
+  .title-block { flex: 1; min-width: 0; }
+  .title-block h2 { font-size: 25px; line-height: 1.02; letter-spacing: -0.035em; font-weight: 720; }
+  .title-block p { color: var(--muted); font-size: 12.5px; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .avatar, .icon-button, .back {
+    width: 40px; height: 40px; border: 0; border-radius: 999px; background: var(--card); color: var(--forest-deep);
+    display: grid; place-items: center; font-weight: 900; box-shadow: inset 0 0 0 1px var(--line); flex-shrink: 0;
+  }
+  .back { cursor: pointer; }
+  .avatar-stack { display: flex; align-items: center; }
+  .mini-avatar { width: 28px; height: 28px; margin-left: -7px; border: 2px solid var(--card); border-radius: 999px; background: var(--tab); color: var(--forest-deep); display: grid; place-items: center; font-size: 11px; font-weight: 900; }
+  .mini-avatar:first-child { margin-left: 0; }
+  .card, .hero, .row, .map-card, .sheet {
+    background: color-mix(in srgb, var(--card) 90%, var(--raised));
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    box-shadow: 0 18px 44px -36px var(--shadow);
+  }
+  .card, .sheet { padding: 15px; }
+  .hero { padding: 17px; border-radius: 28px; overflow: hidden; }
+  .hero-title { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
+  .hero h3 { margin-top: 6px; font-size: 28px; line-height: 1.02; letter-spacing: -0.035em; font-weight: 680; }
+  .quiet { color: var(--muted); font-size: 12.8px; }
+  .countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 15px; }
+  .timebox { background: var(--raised); border: 1px solid var(--line); border-radius: 18px; padding: 10px 7px; text-align: center; }
+  .timebox b { display: block; color: var(--forest-deep); font-size: 26px; line-height: 0.95; letter-spacing: -0.045em; font-weight: 660; }
+  .timebox span { display: block; margin-top: 5px; color: var(--soft); font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 900; }
+  .section { margin-top: 21px; }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0 2px 10px; }
+  .section-head h3 { font-size: 11.5px; color: var(--soft); font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; }
+  .section-head span, .linkish { color: var(--forest); font-size: 12.5px; font-weight: 850; }
+  .stack { display: grid; gap: 10px; }
+  .row { display: flex; gap: 11px; align-items: center; padding: 13px 14px; cursor: pointer; }
+  .row.loose { align-items: flex-start; }
+  .row:hover, .room-tab:hover, .nav-item:hover, .vote-btn:hover { filter: brightness(0.985); }
+  .icon { width: 36px; height: 36px; border-radius: 13px; display: grid; place-items: center; background: var(--tab); color: var(--forest-deep); font-weight: 900; flex-shrink: 0; }
+  .row-copy { flex: 1; min-width: 0; }
+  .row-copy b { display: block; font-size: 14px; line-height: 1.15; }
+  .row-copy span { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+  .chev { color: var(--soft); font-size: 20px; }
+  .pill { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 6px 9px; background: var(--tab); color: var(--forest-deep); font-size: 11px; font-weight: 850; white-space: nowrap; }
+  .pill.green { background: rgba(47,104,78,0.12); color: var(--forest-deep); }
+  .pill.sand { background: rgba(197,141,83,0.17); color: #85582F; }
+  .pill.owed { background: rgba(167,95,59,0.12); color: var(--owed); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--owed); box-shadow: 0 0 0 4px rgba(167,95,59,0.12); }
+  .room-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .room-tab { border: 1px solid var(--line); background: var(--card); border-radius: 20px; padding: 13px; color: var(--ink); text-align: left; cursor: pointer; min-height: 88px; position: relative; }
+  .room-tab b { display: block; margin-top: 8px; font-size: 14px; }
+  .room-tab span { display: block; color: var(--muted); font-size: 11.5px; margin-top: 3px; }
+  .room-tab .dot { position: absolute; top: 13px; right: 13px; width: 7px; height: 7px; box-shadow: none; }
+  .nav { position: absolute; left: 0; right: 0; bottom: 0; height: 76px; background: rgba(255,253,248,0.91); border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; padding: 8px 10px 12px; backdrop-filter: blur(18px); }
+  .nav-item { position: relative; display: grid; place-items: center; gap: 2px; border: 0; border-radius: 15px; background: transparent; color: var(--muted); font-size: 10px; font-weight: 850; cursor: pointer; }
+  .nav-item.active { background: var(--tab); color: var(--forest-deep); }
+  .nav-item .dot { position: absolute; top: 7px; right: 15px; width: 6px; height: 6px; box-shadow: none; }
+  .map-card { height: 178px; border-radius: 24px; background: linear-gradient(135deg, rgba(47,104,78,0.14), rgba(255,253,248,0.92)); position: relative; overflow: hidden; }
+  .map-card::before { content: ""; position: absolute; inset: 22px; border: 2px dashed rgba(47,104,78,0.35); border-radius: 44% 56% 38% 62%; transform: rotate(-8deg); }
+  .map-card::after { content: ""; position: absolute; left: 30px; right: 25px; top: 78px; height: 2px; background: rgba(197,141,83,0.28); transform: rotate(9deg); }
+  .pin { position: absolute; width: 30px; height: 30px; border-radius: 999px 999px 999px 4px; transform: rotate(-45deg); background: var(--forest); display: grid; place-items: center; color: white; font-size: 12px; font-weight: 900; z-index: 1; box-shadow: 0 8px 18px -12px var(--shadow); }
+  .pin span { transform: rotate(45deg); }
+  .pin.locked { background: var(--sand); }
+  .chips { display: flex; gap: 8px; overflow-x: auto; padding: 1px 0 2px; scrollbar-width: none; }
+  .chip { border: 1px solid var(--line); background: var(--card); color: var(--muted); border-radius: 999px; padding: 8px 11px; font-size: 11.5px; font-weight: 850; white-space: nowrap; cursor: pointer; }
+  .chip.active { background: var(--forest); border-color: var(--forest); color: #fff; }
+  .vote-line { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 9px; }
+  .vote-btn { border: 1px solid var(--line); background: var(--raised); color: var(--muted); border-radius: 14px; padding: 8px 4px; font-size: 11px; font-weight: 900; cursor: pointer; }
+  .vote-btn.active { background: var(--forest); border-color: var(--forest); color: #fff; }
+  .timeline { position: relative; display: grid; gap: 12px; padding-left: 4px; }
+  .timeline::before { content: ""; position: absolute; left: 25px; top: 10px; bottom: 10px; width: 1px; background: var(--line); }
+  .time-row { display: flex; gap: 12px; position: relative; }
+  .time { width: 48px; color: var(--soft); font-size: 11px; font-weight: 850; padding-top: 14px; flex-shrink: 0; }
+  .subgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
+  .metric { background: var(--raised); border: 1px solid var(--line); border-radius: 18px; padding: 12px 10px; }
+  .metric .value { color: var(--forest-deep); font-size: 23px; line-height: 0.98; font-weight: 660; letter-spacing: -0.04em; }
+  .metric .label { margin-top: 5px; color: var(--soft); font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 850; }
+  .primary { width: 100%; border: 0; border-radius: 16px; background: var(--forest); color: #fff; padding: 13px; font-weight: 900; cursor: pointer; }
+  .ghost { border: 1px solid var(--line); border-radius: 16px; background: var(--raised); color: var(--forest-deep); padding: 12px 13px; font-weight: 900; cursor: pointer; }
+  .person-detail { display: none; }
+  .person-detail.active { display: block; }
+  .person-list.hidden { display: none; }
+  .thread { display: grid; gap: 9px; }
+  .bubble { max-width: 82%; padding: 10px 12px; border-radius: 17px; font-size: 12.6px; background: var(--raised); border: 1px solid var(--line); color: var(--ink); }
+  .bubble.me { justify-self: end; background: var(--forest); border-color: var(--forest); color: #fff; }
+  .note-panel { display: grid; gap: 14px; }
+  .note-card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 18px; box-shadow: 0 18px 44px -34px var(--shadow); display: none; }
+  .note-card.active { display: block; }
+  .note-card h2 { font-size: 24px; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .note-card p, .note-card li { color: var(--site-muted); font-size: 14px; }
+  .note-card ul { padding-left: 20px; display: grid; gap: 7px; margin-top: 10px; }
+  .flow-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .flow-tabs button { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px; padding: 9px 11px; font-size: 12px; font-weight: 850; cursor: pointer; }
+  .flow-tabs button.active { background: var(--forest); border-color: var(--forest); color: #fff; }
+  @media (max-width: 860px) { .review-grid { grid-template-columns: 1fr; } .phone-frame { position: static; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="page-head">
+    <div class="kicker">Wanderaid · Variant 005</div>
+    <h1 class="serif">A clickable calm basecamp prototype</h1>
+    <p>One iPhone-sized HTML prototype for the new room model: Home, Welcome Desk, Map Wall, Schedule Board, Crew, Kitty, Journal, and Chat. Click room cards, bottom nav, vote buttons, people rows, and message entries.</p>
+  </header>
+
+  <main class="review-grid">
+    <div class="phone-frame">
+      <div class="phone" aria-live="polite">
+        <div class="statusbar"><span>9:41</span><span>Wanderaid</span></div>
+        <div class="phone-scroll">
+          <section class="screen active" data-screen="home">
+            <div class="topbar"><div class="title-block"><h2 class="serif">Home</h2><p>Your trips at a glance</p></div><button class="avatar">S</button></div>
+            <div class="hero" role="button" tabindex="0" data-go="welcome">
+              <div class="hero-title"><div><div class="eyebrow">Next trip</div><h3 class="serif">Kyoto spring</h3><p class="quiet">Apr 6–13 · Tap to enter the trip lobby</p></div><span class="pill green">Current</span></div>
+              <div class="countdown" data-countdown="2027-04-06T09:00:00">
+                <div class="timebox"><b class="serif" data-days>0</b><span>Days</span></div>
+                <div class="timebox"><b class="serif" data-hours>0</b><span>Hours</span></div>
+                <div class="timebox"><b class="serif" data-minutes>0</b><span>Min</span></div>
+                <div class="timebox"><b class="serif" data-seconds>0</b><span>Sec</span></div>
+              </div>
+            </div>
+            <div class="section"><div class="section-head"><h3>Needs your attention</h3><span>2 calls</span></div><div class="stack">
+              <div class="row loose" data-go="map"><div class="icon">✓</div><div class="row-copy"><b>Vote called: Nishiki Market lunch</b><span>Sam wants the group’s take before tomorrow morning</span></div><div class="dot"></div></div>
+              <div class="row loose" data-go="schedule"><div class="icon">🏨</div><div class="row-copy"><b>Confirm hotel room</b><span>Maya needs to know if you are in the Kyoto Station room</span></div><div class="dot"></div></div>
+            </div></div>
+            <div class="section"><div class="section-head"><h3>Grouped feed</h3><span>Across trips</span></div><div class="stack">
+              <div class="row"><div class="icon">S</div><div class="row-copy"><b>Sam added 15 places</b><span>Kyoto spring · food, shrines, coffee</span></div></div>
+              <div class="row"><div class="icon">M</div><div class="row-copy"><b>Maya booked hotel rooms</b><span>2 stays added to Schedule Board</span></div></div>
+              <div class="row"><div class="icon">J</div><div class="row-copy"><b>Jon settled up</b><span>Tahoe cabin weekend</span></div></div>
+            </div></div>
+            <div class="section"><div class="section-head"><h3>Your money</h3><span>Open Kitty</span></div><div class="subgrid">
+              <div class="metric"><div class="value serif">$42</div><div class="label">You owe</div></div>
+              <div class="metric"><div class="value serif">$18</div><div class="label">You get back</div></div>
+            </div></div>
+          </section>
+
+          <section class="screen" data-screen="welcome">
+            <div class="topbar"><button class="back" data-go="home">‹</button><div class="title-block"><h2 class="serif">Welcome Desk</h2><p>Kyoto spring · trip lobby</p></div><button class="icon-button" data-go="chat">💬</button></div>
+            <div class="hero"><div class="hero-title"><div><div class="eyebrow">This trip begins in</div><h3 class="serif">Kyoto, Japan</h3><p class="quiet">Apr 6–13, 2027 · 7 travelers</p></div><span class="pill sand">KYOTO-7F4M</span></div><div class="countdown" data-countdown="2027-04-06T09:00:00"><div class="timebox"><b class="serif" data-days>0</b><span>Days</span></div><div class="timebox"><b class="serif" data-hours>0</b><span>Hours</span></div><div class="timebox"><b class="serif" data-minutes>0</b><span>Min</span></div><div class="timebox"><b class="serif" data-seconds>0</b><span>Sec</span></div></div></div>
+            <div class="section"><div class="section-head"><h3>Walk into a room</h3><span>Basecamp</span></div><div class="room-grid">
+              <button class="room-tab" data-go="map">🗺️<b>Map Wall</b><span>21 places · 1 vote</span><i class="dot"></i></button>
+              <button class="room-tab" data-go="schedule">📋<b>Schedule Board</b><span>Flights, stays, tickets</span></button>
+              <button class="room-tab" data-go="crew">🛏️<b>Crew</b><span>7 people</span></button>
+              <button class="room-tab" data-go="kitty">🐱<b>Kitty</b><span>You owe $42</span></button>
+              <button class="room-tab" data-go="journal">📖<b>Journal</b><span>Guest book</span></button>
+              <button class="room-tab" data-go="chat">💬<b>Chat</b><span>3 unread</span><i class="dot"></i></button>
+            </div></div>
+            <div class="section"><div class="section-head"><h3>Who is going</h3><span>Invite</span></div><div class="card"><div class="avatar-stack"><span class="mini-avatar">S</span><span class="mini-avatar">M</span><span class="mini-avatar">J</span><span class="mini-avatar">P</span><span class="mini-avatar">A</span><span class="mini-avatar">+2</span></div><p class="quiet" style="margin-top:10px">Sawyer, Maya, Jon, Priya, Ana, Leo, and Tess are in.</p></div></div>
+            <div class="section"><div class="section-head"><h3>Trip activity</h3><span>Grouped</span></div><div class="stack"><div class="row"><div class="icon">M</div><div class="row-copy"><b>Maya added 2 bookings</b><span>Hotel room and tea ceremony deposit</span></div></div><div class="row"><div class="icon">S</div><div class="row-copy"><b>Sam called for votes</b><span>Nishiki Market lunch shortlist</span></div></div></div></div>
+            <div class="section"><button class="primary" data-go="chat">Open group chat</button></div>
+          </section>
+
+          <section class="screen" data-screen="map">
+            <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Map Wall</h2><p>Where should we go?</p></div><button class="icon-button">＋</button></div>
+            <div class="map-card"><div class="pin" style="left:60px;top:42px"><span>4.0</span></div><div class="pin locked" style="right:68px;top:88px"><span>🔒</span></div><div class="pin" style="left:178px;top:64px;background:var(--owed)"><span>1.5</span></div><div class="pin" style="right:118px;top:30px;background:var(--forest-deep)"><span>3</span></div></div>
+            <div class="section"><div class="chips"><button class="chip active">All</button><button class="chip">Food</button><button class="chip">Shrines</button><button class="chip">Pinned</button><button class="chip">Calls</button></div></div>
+            <div class="section"><div class="section-head"><h3>Prioritized shortlist</h3><span>Votes weigh yes +1 · weak +0.5 · no −1</span></div><div class="stack">
+              <div class="row loose"><div class="icon">🍣</div><div class="row-copy"><b>Nishiki Market lunch <span class="pill owed">Vote called</span></b><span data-score="nishiki">Score 4.0 · 4 yes · 0 weak · 0 no · 2 abstain</span><div class="vote-line" data-vote="nishiki"><button class="vote-btn" data-value="yes">Yes +1</button><button class="vote-btn" data-value="weak">Weak +0.5</button><button class="vote-btn" data-value="no">No −1</button></div></div></div>
+              <div class="row loose" data-go="schedule"><div class="icon">🎟️</div><div class="row-copy"><b>Tea ceremony at Camellia</b><span>🔒 Locked in · appears on Apr 7 Schedule Board</span></div><span class="pill sand">Booked</span></div>
+              <div class="row loose"><div class="icon">⛩️</div><div class="row-copy"><b>Fushimi Inari sunrise</b><span>Score 3.0 · pinned by Priya · early train needed</span></div><span class="pill green">Pinned</span></div>
+              <div class="row loose"><div class="icon">☕</div><div class="row-copy"><b>Kissa Sora</b><span>Score 1.5 · quiet coffee near hotel</span></div><span class="pill">Food</span></div>
+            </div></div>
+          </section>
+
+          <section class="screen" data-screen="schedule">
+            <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Schedule Board</h2><p>What are we doing, when?</p></div><button class="icon-button">＋</button></div>
+            <div class="section" style="margin-top:2px"><div class="section-head"><h3>Apr 6 · Sunday</h3><span>Arrival day</span></div><div class="timeline">
+              <div class="time-row"><div class="time">15:40</div><div class="row loose"><div class="icon">✈️</div><div class="row-copy"><b>SFO → KIX</b><span><span class="pill">S</span> <span class="pill">M</span> arrive together</span></div></div></div>
+              <div class="time-row"><div class="time">18:30</div><div class="row loose"><div class="icon">🏨</div><div class="row-copy"><b>Kyoto Station rooms</b><span><span class="pill">M</span> <span class="pill">J</span> need your room confirmation</span></div><div class="dot"></div></div></div>
+            </div></div>
+            <div class="section"><div class="section-head"><h3>Apr 7 · Monday</h3><span>3 items</span></div><div class="timeline">
+              <div class="time-row"><div class="time">8:20</div><div class="row loose"><div class="icon">⛩️</div><div class="row-copy"><b>Fushimi Inari sunrise</b><span><span class="pill">P</span> <span class="pill">A</span> <span class="pill">L</span> taking early train</span></div></div></div>
+              <div class="time-row"><div class="time">12:30</div><div class="row loose"><div class="icon">🍣</div><div class="row-copy"><b>Lunch area TBD</b><span>Vote from Map Wall closes at 9am</span></div><span class="pill owed">Call</span></div></div>
+              <div class="time-row"><div class="time">16:00</div><div class="row loose"><div class="icon">🎟️</div><div class="row-copy"><b>Tea ceremony</b><span>Prebooked · deposit paid by Maya</span></div><span class="pill sand">Locked</span></div></div>
+            </div></div>
+            <div class="section"><div class="section-head"><h3>Undated backlog</h3><span>Add</span></div><div class="stack"><div class="row"><div class="icon">□</div><div class="row-copy"><b>Book rain-day museum</b><span>Needs a day after weather check</span></div></div><div class="row"><div class="icon">□</div><div class="row-copy"><b>Reserve farewell dinner</b><span>Pick between Gion and Pontocho</span></div></div></div></div>
+          </section>
+
+          <section class="screen" data-screen="crew">
+            <div class="person-list" id="personList"><div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Crew</h2><p>Dorm hall · who is in this?</p></div><button class="icon-button">＋</button></div>
+              <div class="section" style="margin-top:2px"><div class="section-head"><h3>Organizer</h3><span>7 travelers</span></div><div class="row" data-person="sawyer"><div class="avatar">S</div><div class="row-copy"><b>Sawyer</b><span>Organizer · arrives Apr 6 · owes $42</span></div><div class="chev">›</div></div></div>
+              <div class="section"><div class="section-head"><h3>Traveler rooms</h3><span>Message anyone</span></div><div class="stack"><div class="row" data-person="maya"><div class="avatar">M</div><div class="row-copy"><b>Maya Chen</b><span>Gets back $128 · booked hotel and tea</span></div><span class="pill green">Online</span></div><div class="row" data-person="jon"><div class="avatar">J</div><div class="row-copy"><b>Jon Bell</b><span>Owes $61 · votes in on 8 places</span></div><div class="dot"></div></div><div class="row" data-person="priya"><div class="avatar">P</div><div class="row-copy"><b>Priya Shah</b><span>Settled · pinned Fushimi Inari</span></div><div class="chev">›</div></div></div></div>
+            </div>
+            <div class="person-detail" id="personDetail"><div class="topbar"><button class="back" id="backToCrew">‹</button><div class="title-block"><h2 class="serif" id="personName">Maya Chen</h2><p id="personMeta">Traveler room</p></div><button class="icon-button" data-go="chat">💬</button></div>
+              <div class="card"><div class="avatar" style="width:58px;height:58px;font-size:22px" id="personInitial">M</div><h3 class="serif" id="personHeadline" style="font-size:27px;margin-top:12px">Gets back $128</h3><p class="quiet" id="personDetailText">Organizer helper · arrives Apr 6 15:40 · departs Apr 13 11:20</p><button class="primary" style="margin-top:14px" data-go="chat">Message Maya</button></div>
+              <div class="section"><div class="section-head"><h3>Their footprint</h3><span>Across basecamp</span></div><div class="subgrid"><div class="metric"><div class="value serif">6</div><div class="label">Places</div></div><div class="metric"><div class="value serif">4</div><div class="label">Expenses</div></div><div class="metric"><div class="value serif">3</div><div class="label">Bookings</div></div><div class="metric"><div class="value serif">12</div><div class="label">Votes</div></div></div></div>
+              <div class="section"><div class="section-head"><h3>Recent items</h3></div><div class="stack"><div class="row"><div class="icon">🏨</div><div class="row-copy"><b>Kyoto Station rooms</b><span>Hotel · Maya booked · you need to confirm</span></div></div><div class="row"><div class="icon">🍜</div><div class="row-copy"><b>Ramen alley dinner</b><span>Expense · paid $196</span></div></div><div class="row"><div class="icon">✓</div><div class="row-copy"><b>Yes on Fushimi Inari</b><span>Vote · pinned by Priya</span></div></div></div></div>
+            </div>
+          </section>
+
+          <section class="screen" data-screen="kitty">
+            <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Kitty</h2><p>The fair ledger</p></div><button class="icon-button">＋</button></div>
+            <div class="hero"><div class="eyebrow">Your balance</div><div class="subgrid" style="margin-top:12px"><div class="metric"><div class="value serif">$42</div><div class="label">You owe</div></div><div class="metric"><div class="value serif">$18</div><div class="label">You get back</div></div></div><button class="primary" style="margin-top:13px" id="showRepay">View repayment plan</button></div>
+            <div class="section"><div class="section-head"><h3>Quick add</h3><span>On the go</span></div><div class="card"><div style="display:flex;gap:9px"><button class="ghost" style="flex:1">$ Amount</button><button class="ghost" style="flex:1">Who paid?</button></div><button class="primary" style="margin-top:10px">Add equal split expense</button></div></div>
+            <div class="section" id="expenseList"><div class="section-head"><h3>Expenses</h3><span>Balances</span></div><div class="stack"><div class="row loose"><div class="icon">🍜</div><div class="row-copy"><b>Ramen alley dinner</b><span>Maya paid $196 · you owe $39</span></div><span class="pill owed">Due</span></div><div class="row loose"><div class="icon">🚕</div><div class="row-copy"><b>Station taxis</b><span>You paid $82 · Jon and Priya owe you</span></div><span class="pill green">Back</span></div><div class="row loose"><div class="icon">🎟️</div><div class="row-copy"><b>Tea ceremony deposit</b><span>Maya paid $120 · awaiting headcount</span></div></div></div></div>
+            <div class="section" id="repayView" style="display:none"><div class="section-head"><h3>Repayment plan</h3><span>2 steps</span></div><div class="stack"><div class="row"><div class="icon">1</div><div class="row-copy"><b>Pay Maya $42</b><span>Covers ramen and tea ceremony deposit</span></div><span class="pill green">Pay</span></div><div class="row"><div class="icon">2</div><div class="row-copy"><b>Jon pays you $18</b><span>Station taxis reimbursement</span></div><span class="pill">Waiting</span></div></div></div>
+          </section>
+
+          <section class="screen" data-screen="journal">
+            <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Journal</h2><p>The guest book</p></div><button class="icon-button">＋</button></div>
+            <div class="hero"><div class="eyebrow">After the trip</div><h3 class="serif">Remember when…</h3><p class="quiet" style="margin-top:8px">One-liners, short paragraphs, album links, and the group chat thread that keeps the story together.</p></div>
+            <div class="section"><div class="section-head"><h3>Guest book</h3><span>No ratings</span></div><div class="stack"><div class="row loose"><div class="avatar">P</div><div class="row-copy"><b>Priya</b><span>“The sunrise train was sleepy and perfect. Worth every alarm.”</span></div></div><div class="row loose"><div class="avatar">J</div><div class="row-copy"><b>Jon</b><span>“I still can’t believe we found that tiny jazz bar after dinner.”</span></div></div><div class="row loose"><div class="avatar">M</div><div class="row-copy"><b>Maya</b><span>“Favorite moment: everyone trying to split one umbrella.”</span></div></div></div></div>
+            <div class="section"><div class="section-head"><h3>Albums and conversations</h3></div><div class="stack"><div class="row"><div class="icon">🖼️</div><div class="row-copy"><b>Google Photos album</b><span>42 photos · external link MVP</span></div><div class="chev">›</div></div><div class="row" data-go="chat"><div class="icon">💬</div><div class="row-copy"><b>Open Kyoto spring chat</b><span>Trip conversation stays connected</span></div><div class="chev">›</div></div></div></div>
+          </section>
+
+          <section class="screen" data-screen="chat">
+            <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Chat</h2><p>Trip channel + direct messages</p></div><button class="icon-button">＋</button></div>
+            <div class="section" style="margin-top:2px"><div class="section-head"><h3>Kyoto spring channel</h3><span>3 unread</span></div><div class="card"><div class="thread"><div class="bubble"><b>Maya</b><br>Hotel confirmed. Sawyer, can you tap the room call when you’re in?</div><div class="bubble me">Yep — checking the Schedule Board now.</div><div class="bubble"><b>Sam</b><br>I added a few lunch places and called a vote.</div></div><button class="primary" style="margin-top:13px">Send message</button></div></div>
+            <div class="section"><div class="section-head"><h3>Direct messages</h3><span>Cross-trip</span></div><div class="stack"><div class="row"><div class="avatar">M</div><div class="row-copy"><b>Maya Chen</b><span>“Can you send me your arrival window?”</span></div><div class="dot"></div></div><div class="row"><div class="avatar">J</div><div class="row-copy"><b>Jon Bell</b><span>Tahoe and Kyoto shared DM history</span></div></div><div class="row"><div class="avatar">P</div><div class="row-copy"><b>Priya Shah</b><span>Last message yesterday</span></div></div></div></div>
+          </section>
+        </div>
+        <nav class="nav" aria-label="Prototype rooms">
+          <button class="nav-item active" data-go="home">⌂<span>Home</span></button>
+          <button class="nav-item" data-go="welcome">✦<span>Lobby</span></button>
+          <button class="nav-item" data-go="map">🗺<span>Map</span><i class="dot"></i></button>
+          <button class="nav-item" data-go="schedule">📋<span>Board</span></button>
+          <button class="nav-item" data-go="chat">💬<span>Chat</span><i class="dot"></i></button>
+        </nav>
+      </div>
+    </div>
+
+    <aside class="note-panel">
+      <div class="flow-tabs" aria-label="Flow shortcuts">
+        <button class="active" data-go="home">Home</button><button data-go="welcome">Welcome Desk</button><button data-go="map">Map Wall</button><button data-go="schedule">Schedule</button><button data-go="crew">Crew</button><button data-go="kitty">Kitty</button><button data-go="journal">Journal</button><button data-go="chat">Chat</button>
+      </div>
+      <div class="note-card active" data-note="home"><h2 class="serif">Home · user lens</h2><p>Answers “what’s going on across my trips?” with live ticking countdown, action-needed calls, grouped feed, and personal money.</p><ul><li>Hero is tappable instead of adding a noisy CTA row.</li><li>Countdown is the emotional serif moment.</li><li>Feed lines are grouped by actor + action.</li></ul></div>
+      <div class="note-card" data-note="welcome"><h2 class="serif">Welcome Desk · trip lobby</h2><p>The per-trip basecamp front door: countdown, basics, who's going, invite code, group chat, activity, and room entrances.</p><ul><li>Absorbs old current-trip dashboard and invite threshold.</li><li>Room cards are the “walk further in” layer.</li><li>Unread dots keep chat/vote calls visible without badges everywhere.</li></ul></div>
+      <div class="note-card" data-note="map"><h2 class="serif">Map Wall</h2><p>POI shortlist with tags, pin markers, weighted voting, one locked-in marker linked to the schedule.</p><ul><li>Vote buttons update the visible score in-place.</li><li>Weak yes is positive (+0.5), abstain is absent/null.</li><li>Locked-in is visually separate from pinned.</li></ul></div>
+      <div class="note-card" data-note="schedule"><h2 class="serif">Schedule Board</h2><p>A day-grouped coordination spine for flights, hotel stays, and prebooked activities with participant avatar chips.</p><ul><li>Day headers read like editorial sections.</li><li>Calls can live inside the timeline and surface back to Home.</li><li>Undated backlog preserves maybe-later tasks.</li></ul></div>
+      <div class="note-card" data-note="crew"><h2 class="serif">Crew</h2><p>Dorm hall list; tap a person to open their room and see their footprint across places, expenses, bookings, votes, role, timing, and money.</p><ul><li>Person room is a cross-cutting derived view.</li><li>Message button demonstrates DM entry point.</li><li>Money status stays glanceable before detail.</li></ul></div>
+      <div class="note-card" data-note="kitty"><h2 class="serif">Kitty</h2><p>The fair ledger: user-first balances, quick on-the-go expense add, expense list, and repayment plan.</p><ul><li>Tap “View repayment plan” to swap from list to settlement guidance.</li><li>Money uses serif as an emotional number.</li><li>Quick add stays lightweight and non-formy.</li></ul></div>
+      <div class="note-card" data-note="journal"><h2 class="serif">Journal</h2><p>The guest book for after-trip closure: short memories, external album links, and a link back to chat. No ratings.</p><ul><li>Warm closure, not review mechanics.</li><li>External albums are MVP-compatible.</li><li>Chat tie-in keeps the story thread alive.</li></ul></div>
+      <div class="note-card" data-note="chat"><h2 class="serif">Chat</h2><p>First-release text chat: one trip channel plus user-level direct messages, with minimal unread dots.</p><ul><li>Shows trip thread and cross-trip DM list on one surface.</li><li>No typing indicators, read receipts, media, or threads.</li><li>Entry points exist from Welcome Desk and Crew rooms.</li></ul></div>
+    </aside>
+  </main>
+</div>
+<script>
+  const screens = [...document.querySelectorAll('.screen')];
+  const navItems = [...document.querySelectorAll('[data-go]')];
+  const notes = [...document.querySelectorAll('.note-card')];
+  const flowButtons = [...document.querySelectorAll('.flow-tabs button')];
+  const bottomNavButtons = [...document.querySelectorAll('.nav-item')];
+
+  function showScreen(name) {
+    screens.forEach(screen => screen.classList.toggle('active', screen.dataset.screen === name));
+    notes.forEach(note => note.classList.toggle('active', note.dataset.note === name));
+    flowButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.go === name));
+    bottomNavButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.go === name));
+    document.querySelector('.phone-scroll').scrollTo({ top: 0, behavior: 'smooth' });
+    if (name === 'crew') resetCrewList();
+  }
+
+  navItems.forEach(item => item.addEventListener('click', event => {
+    const target = item.dataset.go;
+    if (target) showScreen(target);
+  }));
+
+  function updateCountdowns() {
+    document.querySelectorAll('[data-countdown]').forEach(box => {
+      const target = new Date(box.dataset.countdown).getTime();
+      const diff = Math.max(target - Date.now(), 0);
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+      box.querySelector('[data-days]').textContent = days;
+      box.querySelector('[data-hours]').textContent = String(hours).padStart(2, '0');
+      box.querySelector('[data-minutes]').textContent = String(minutes).padStart(2, '0');
+      box.querySelector('[data-seconds]').textContent = String(seconds).padStart(2, '0');
+    });
+  }
+  updateCountdowns();
+  setInterval(updateCountdowns, 1000);
+
+  const voteState = { nishiki: { base: 4, yes: 4, weak: 0, no: 0, user: null } };
+  document.querySelectorAll('[data-vote] .vote-btn').forEach(button => {
+    button.addEventListener('click', event => {
+      event.stopPropagation();
+      const group = button.closest('[data-vote]');
+      const key = group.dataset.vote;
+      const state = voteState[key];
+      if (state.user) state[state.user] -= 1;
+      group.querySelectorAll('.vote-btn').forEach(btn => btn.classList.remove('active'));
+      const value = button.dataset.value;
+      if (state.user === value) {
+        state.user = null;
+      } else {
+        state.user = value;
+        state[value] += 1;
+        button.classList.add('active');
+      }
+      const score = state.yes + state.weak * 0.5 - state.no;
+      document.querySelector(`[data-score="${key}"]`).textContent = `Score ${score.toFixed(1)} · ${state.yes} yes · ${state.weak} weak · ${state.no} no · abstain not counted`;
+    });
+  });
+
+  const people = {
+    sawyer: { name: 'Sawyer', initial: 'S', meta: 'Organizer · you', headline: 'Owes $42', detail: 'Organizer · arrives Apr 6 15:40 · departs Apr 13 11:20' },
+    maya: { name: 'Maya Chen', initial: 'M', meta: 'Traveler room', headline: 'Gets back $128', detail: 'Organizer helper · arrives Apr 6 15:40 · departs Apr 13 11:20' },
+    jon: { name: 'Jon Bell', initial: 'J', meta: 'Traveler room', headline: 'Owes $61', detail: 'Traveler · arrives Apr 7 08:10 · departs Apr 13 18:00' },
+    priya: { name: 'Priya Shah', initial: 'P', meta: 'Traveler room', headline: 'Settled', detail: 'Traveler · arrives Apr 5 20:30 · departs Apr 14 09:15' }
+  };
+  function resetCrewList() {
+    document.getElementById('personList').classList.remove('hidden');
+    document.getElementById('personDetail').classList.remove('active');
+  }
+  document.querySelectorAll('[data-person]').forEach(row => row.addEventListener('click', () => {
+    const person = people[row.dataset.person];
+    document.getElementById('personName').textContent = person.name;
+    document.getElementById('personInitial').textContent = person.initial;
+    document.getElementById('personMeta').textContent = person.meta;
+    document.getElementById('personHeadline').textContent = person.headline;
+    document.getElementById('personDetailText').textContent = person.detail;
+    document.getElementById('personList').classList.add('hidden');
+    document.getElementById('personDetail').classList.add('active');
+    document.querySelector('.phone-scroll').scrollTo({ top: 0, behavior: 'smooth' });
+  }));
+  document.getElementById('backToCrew').addEventListener('click', resetCrewList);
+
+  document.getElementById('showRepay').addEventListener('click', () => {
+    const list = document.getElementById('expenseList');
+    const repay = document.getElementById('repayView');
+    const showing = repay.style.display !== 'none';
+    repay.style.display = showing ? 'none' : 'block';
+    list.style.display = showing ? 'block' : 'none';
+    document.getElementById('showRepay').textContent = showing ? 'View repayment plan' : 'Back to expense list';
+  });
+</script>
+</body>
+</html>
