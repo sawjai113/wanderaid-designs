@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wanderaid · Calm Basecamp Prototype</title>
+<title>Wanderaid · Calm Trip Prototype</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -81,6 +81,12 @@
   }
   .card, .sheet { padding: 15px; }
   .hero { padding: 17px; border-radius: 28px; overflow: hidden; }
+  .photo-hero { padding: 0; overflow: hidden; }
+  .trip-photo { min-height: 210px; padding: 16px; display: flex; flex-direction: column; justify-content: flex-end; background-image: linear-gradient(to top, rgba(22,17,12,0.82), rgba(22,17,12,0.22) 58%, rgba(22,17,12,0.08)), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 760 420'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23E9B46F'/%3E%3Cstop offset='0.48' stop-color='%23D78975'/%3E%3Cstop offset='1' stop-color='%23644A35'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='760' height='420' fill='url(%23sky)'/%3E%3Ccircle cx='590' cy='92' r='54' fill='%23F6D49A' opacity='0.88'/%3E%3Cpath d='M0 276 C110 230 165 285 260 245 C360 202 450 258 560 216 C640 186 704 204 760 178 L760 420 L0 420 Z' fill='%232F684E' opacity='0.82'/%3E%3Cpath d='M0 322 C126 274 204 348 324 292 C430 242 522 306 640 252 C692 228 728 226 760 218 L760 420 L0 420 Z' fill='%231F4F39' opacity='0.9'/%3E%3Cpath d='M368 112 l42 128 h-84 z M350 242 h38 v74 h-38z M320 168 h98 v26 h-98z' fill='%23FFF8ED' opacity='0.82'/%3E%3Cpath d='M120 300 C160 270 198 270 242 302 C198 314 158 314 120 300z' fill='%23FFF8ED' opacity='0.32'/%3E%3C/svg%3E"); background-size: cover; background-position: center; color: #FFF8ED; }
+  .trip-photo h3 { color: #FFF8ED; text-shadow: 0 1px 18px rgba(0,0,0,0.35); }
+  .trip-photo .quiet { color: rgba(255,248,237,0.86); }
+  .photo-actions { display: flex; gap: 8px; padding: 12px; background: rgba(255,253,248,0.94); border-top: 1px solid var(--line); }
+  .photo-actions .ghost { flex: 1; padding: 10px 8px; font-size: 11.5px; }
   .hero-title { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
   .hero h3 { margin-top: 6px; font-size: 28px; line-height: 1.02; letter-spacing: -0.035em; font-weight: 680; }
   .quiet { color: var(--muted); font-size: 12.8px; }
@@ -93,6 +99,12 @@
   .section-head h3 { font-size: 11.5px; color: var(--soft); font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; }
   .section-head span, .linkish { color: var(--forest); font-size: 12.5px; font-weight: 850; }
   .stack { display: grid; gap: 10px; }
+  .list-group { background: var(--card); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; box-shadow: 0 18px 44px -36px var(--shadow); }
+  .list-group .row { border: 0; border-radius: 0; box-shadow: none; background: transparent; padding: 11px 13px; }
+  .list-group .row + .row { border-top: 1px solid rgba(230,217,198,0.82); }
+  .list-group .icon { width: 32px; height: 32px; border-radius: 12px; }
+  .list-group .row-copy b { font-size: 13.5px; }
+  .list-group .row-copy span { font-size: 11.6px; }
   .row { display: flex; gap: 11px; align-items: center; padding: 13px 14px; cursor: pointer; }
   .row.loose { align-items: flex-start; }
   .row:hover, .room-tab:hover, .nav-item:hover, .vote-btn:hover { filter: brightness(0.985); }
@@ -159,8 +171,8 @@
 <div class="wrap">
   <header class="page-head">
     <div class="kicker">Wanderaid · Variant 005</div>
-    <h1 class="serif">A clickable calm basecamp prototype</h1>
-    <p>One iPhone-sized HTML prototype for the new room model: Home, Welcome Desk, Map Wall, Schedule Board, Crew, Kitty, Journal, and Chat. Click room cards, bottom nav, vote buttons, people rows, and message entries.</p>
+    <h1 class="serif">A clickable calm trip prototype</h1>
+    <p>One iPhone-sized HTML prototype for the new trip model: Home, Trip Overview, Places, Itinerary, People, Money, Memories, and Chat. Click cards, bottom nav, vote buttons, people rows, and message entries.</p>
   </header>
 
   <main class="review-grid">
@@ -171,7 +183,7 @@
           <section class="screen active" data-screen="home">
             <div class="topbar"><div class="title-block"><h2 class="serif">Home</h2><p>Your trips at a glance</p></div><button class="avatar">S</button></div>
             <div class="hero" role="button" tabindex="0" data-go="welcome">
-              <div class="hero-title"><div><div class="eyebrow">Next trip</div><h3 class="serif">Kyoto spring</h3><p class="quiet">Apr 6–13 · Tap to enter the trip lobby</p></div><span class="pill green">Current</span></div>
+              <div class="hero-title"><div><div class="eyebrow">Next trip</div><h3 class="serif">Kyoto spring</h3><p class="quiet">Apr 6–13 · Tap to open the trip</p></div><span class="pill green">Current</span></div>
               <div class="countdown" data-countdown="2027-04-06T09:00:00">
                 <div class="timebox"><b class="serif" data-days>0</b><span>Days</span></div>
                 <div class="timebox"><b class="serif" data-hours>0</b><span>Hours</span></div>
@@ -179,77 +191,78 @@
                 <div class="timebox"><b class="serif" data-seconds>0</b><span>Sec</span></div>
               </div>
             </div>
-            <div class="section"><div class="section-head"><h3>Needs your attention</h3><span>2 calls</span></div><div class="stack">
+            <div class="section"><div class="section-head"><h3>Needs your attention</h3><span>2 calls</span></div><div class="list-group">
               <div class="row loose" data-go="map"><div class="icon">✓</div><div class="row-copy"><b>Vote called: Nishiki Market lunch</b><span>Sam wants the group’s take before tomorrow morning</span></div><div class="dot"></div></div>
-              <div class="row loose" data-go="schedule"><div class="icon">🏨</div><div class="row-copy"><b>Confirm hotel room</b><span>Maya needs to know if you are in the Kyoto Station room</span></div><div class="dot"></div></div>
+              <div class="row loose" data-go="schedule"><div class="icon">🏨</div><div class="row-copy"><b>Confirm hotel stay</b><span>Maya needs to know if you are staying at Kyoto Station</span></div><div class="dot"></div></div>
             </div></div>
-            <div class="section"><div class="section-head"><h3>Grouped feed</h3><span>Across trips</span></div><div class="stack">
+            <div class="section"><div class="section-head"><h3>Grouped feed</h3><span>Across trips</span></div><div class="list-group">
               <div class="row"><div class="icon">S</div><div class="row-copy"><b>Sam added 15 places</b><span>Kyoto spring · food, shrines, coffee</span></div></div>
-              <div class="row"><div class="icon">M</div><div class="row-copy"><b>Maya booked hotel rooms</b><span>2 stays added to Schedule Board</span></div></div>
+              <div class="row"><div class="icon">M</div><div class="row-copy"><b>Maya booked hotel stays</b><span>2 stays added to Itinerary</span></div></div>
               <div class="row"><div class="icon">J</div><div class="row-copy"><b>Jon settled up</b><span>Tahoe cabin weekend</span></div></div>
             </div></div>
-            <div class="section"><div class="section-head"><h3>Your money</h3><span>Open Kitty</span></div><div class="subgrid">
+            <div class="section"><div class="section-head"><h3>Your money</h3><span>Open Money</span></div><div class="subgrid">
               <div class="metric"><div class="value serif">$42</div><div class="label">You owe</div></div>
               <div class="metric"><div class="value serif">$18</div><div class="label">You get back</div></div>
             </div></div>
           </section>
 
           <section class="screen" data-screen="welcome">
-            <div class="topbar"><button class="back" data-go="home">‹</button><div class="title-block"><h2 class="serif">Welcome Desk</h2><p>Kyoto spring · trip lobby</p></div><button class="icon-button" data-go="chat">💬</button></div>
-            <div class="hero"><div class="hero-title"><div><div class="eyebrow">This trip begins in</div><h3 class="serif">Kyoto, Japan</h3><p class="quiet">Apr 6–13, 2027 · 7 travelers</p></div><span class="pill sand">KYOTO-7F4M</span></div><div class="countdown" data-countdown="2027-04-06T09:00:00"><div class="timebox"><b class="serif" data-days>0</b><span>Days</span></div><div class="timebox"><b class="serif" data-hours>0</b><span>Hours</span></div><div class="timebox"><b class="serif" data-minutes>0</b><span>Min</span></div><div class="timebox"><b class="serif" data-seconds>0</b><span>Sec</span></div></div></div>
-            <div class="section"><div class="section-head"><h3>Walk into a room</h3><span>Basecamp</span></div><div class="room-grid">
-              <button class="room-tab" data-go="map">🗺️<b>Map Wall</b><span>21 places · 1 vote</span><i class="dot"></i></button>
-              <button class="room-tab" data-go="schedule">📋<b>Schedule Board</b><span>Flights, stays, tickets</span></button>
-              <button class="room-tab" data-go="crew">🛏️<b>Crew</b><span>7 people</span></button>
-              <button class="room-tab" data-go="kitty">🐱<b>Kitty</b><span>You owe $42</span></button>
-              <button class="room-tab" data-go="journal">📖<b>Journal</b><span>Guest book</span></button>
+            <div class="topbar"><button class="back" data-go="home">‹</button><div class="title-block"><h2 class="serif">Kyoto spring</h2><p>Trip Overview</p></div><button class="icon-button" data-go="chat">💬</button></div>
+            <div class="hero photo-hero"><div class="trip-photo"><div class="eyebrow">This trip begins in</div><h3 class="serif">Kyoto, Japan</h3><p class="quiet">Apr 6–13, 2027 · 7 travelers · each trip gets its own cover image</p></div><div class="photo-actions"><button class="ghost">Upload photo</button><button class="ghost">Use image URL</button></div></div>
+            <div class="section"><div class="hero"><div class="hero-title"><div><div class="eyebrow">Countdown</div><p class="quiet">Live until the first morning in Kyoto</p></div><span class="pill sand">KYOTO-7F4M</span></div><div class="countdown" data-countdown="2027-04-06T09:00:00"><div class="timebox"><b class="serif" data-days>0</b><span>Days</span></div><div class="timebox"><b class="serif" data-hours>0</b><span>Hours</span></div><div class="timebox"><b class="serif" data-minutes>0</b><span>Min</span></div><div class="timebox"><b class="serif" data-seconds>0</b><span>Sec</span></div></div></div></div>
+            <div class="section"><div class="section-head"><h3>Trip sections</h3><span>Overview</span></div><div class="room-grid">
+              <button class="room-tab" data-go="map">🗺️<b>Places</b><span>21 saved · 1 vote</span><i class="dot"></i></button>
+              <button class="room-tab" data-go="schedule">📋<b>Itinerary</b><span>Flights, stays, tickets</span></button>
+              <button class="room-tab" data-go="crew">🛏️<b>People</b><span>7 people</span></button>
+              <button class="room-tab" data-go="kitty">🐱<b>Money</b><span>You owe $42</span></button>
+              <button class="room-tab" data-go="journal">📖<b>Memories</b><span>Guest book</span></button>
               <button class="room-tab" data-go="chat">💬<b>Chat</b><span>3 unread</span><i class="dot"></i></button>
             </div></div>
             <div class="section"><div class="section-head"><h3>Who is going</h3><span>Invite</span></div><div class="card"><div class="avatar-stack"><span class="mini-avatar">S</span><span class="mini-avatar">M</span><span class="mini-avatar">J</span><span class="mini-avatar">P</span><span class="mini-avatar">A</span><span class="mini-avatar">+2</span></div><p class="quiet" style="margin-top:10px">Sawyer, Maya, Jon, Priya, Ana, Leo, and Tess are in.</p></div></div>
-            <div class="section"><div class="section-head"><h3>Trip activity</h3><span>Grouped</span></div><div class="stack"><div class="row"><div class="icon">M</div><div class="row-copy"><b>Maya added 2 bookings</b><span>Hotel room and tea ceremony deposit</span></div></div><div class="row"><div class="icon">S</div><div class="row-copy"><b>Sam called for votes</b><span>Nishiki Market lunch shortlist</span></div></div></div></div>
+            <div class="section"><div class="section-head"><h3>Trip activity</h3><span>Grouped</span></div><div class="list-group"><div class="row"><div class="icon">M</div><div class="row-copy"><b>Maya added 2 bookings</b><span>Hotel stay and tea ceremony deposit</span></div></div><div class="row"><div class="icon">S</div><div class="row-copy"><b>Sam called for votes</b><span>Nishiki Market lunch shortlist</span></div></div></div></div>
             <div class="section"><button class="primary" data-go="chat">Open group chat</button></div>
           </section>
 
           <section class="screen" data-screen="map">
-            <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Map Wall</h2><p>Where should we go?</p></div><button class="icon-button">＋</button></div>
+            <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Places</h2><p>Where should we go?</p></div><button class="icon-button">＋</button></div>
             <div class="map-card"><div class="pin" style="left:60px;top:42px"><span>4.0</span></div><div class="pin locked" style="right:68px;top:88px"><span>🔒</span></div><div class="pin" style="left:178px;top:64px;background:var(--owed)"><span>1.5</span></div><div class="pin" style="right:118px;top:30px;background:var(--forest-deep)"><span>3</span></div></div>
             <div class="section"><div class="chips"><button class="chip active">All</button><button class="chip">Food</button><button class="chip">Shrines</button><button class="chip">Pinned</button><button class="chip">Calls</button></div></div>
             <div class="section"><div class="section-head"><h3>Prioritized shortlist</h3><span>Votes weigh yes +1 · weak +0.5 · no −1</span></div><div class="stack">
               <div class="row loose"><div class="icon">🍣</div><div class="row-copy"><b>Nishiki Market lunch <span class="pill owed">Vote called</span></b><span data-score="nishiki">Score 4.0 · 4 yes · 0 weak · 0 no · 2 abstain</span><div class="vote-line" data-vote="nishiki"><button class="vote-btn" data-value="yes">Yes +1</button><button class="vote-btn" data-value="weak">Weak +0.5</button><button class="vote-btn" data-value="no">No −1</button></div></div></div>
-              <div class="row loose" data-go="schedule"><div class="icon">🎟️</div><div class="row-copy"><b>Tea ceremony at Camellia</b><span>🔒 Locked in · appears on Apr 7 Schedule Board</span></div><span class="pill sand">Booked</span></div>
+              <div class="row loose" data-go="schedule"><div class="icon">🎟️</div><div class="row-copy"><b>Tea ceremony at Camellia</b><span>🔒 Locked in · appears on Apr 7 Itinerary</span></div><span class="pill sand">Booked</span></div>
               <div class="row loose"><div class="icon">⛩️</div><div class="row-copy"><b>Fushimi Inari sunrise</b><span>Score 3.0 · pinned by Priya · early train needed</span></div><span class="pill green">Pinned</span></div>
               <div class="row loose"><div class="icon">☕</div><div class="row-copy"><b>Kissa Sora</b><span>Score 1.5 · quiet coffee near hotel</span></div><span class="pill">Food</span></div>
             </div></div>
           </section>
 
           <section class="screen" data-screen="schedule">
-            <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Schedule Board</h2><p>What are we doing, when?</p></div><button class="icon-button">＋</button></div>
+            <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Itinerary</h2><p>What are we doing, when?</p></div><button class="icon-button">＋</button></div>
             <div class="section" style="margin-top:2px"><div class="section-head"><h3>Apr 6 · Sunday</h3><span>Arrival day</span></div><div class="timeline">
               <div class="time-row"><div class="time">15:40</div><div class="row loose"><div class="icon">✈️</div><div class="row-copy"><b>SFO → KIX</b><span><span class="pill">S</span> <span class="pill">M</span> arrive together</span></div></div></div>
-              <div class="time-row"><div class="time">18:30</div><div class="row loose"><div class="icon">🏨</div><div class="row-copy"><b>Kyoto Station rooms</b><span><span class="pill">M</span> <span class="pill">J</span> need your room confirmation</span></div><div class="dot"></div></div></div>
+              <div class="time-row"><div class="time">18:30</div><div class="row loose"><div class="icon">🏨</div><div class="row-copy"><b>Kyoto Station hotel</b><span><span class="pill">M</span> <span class="pill">J</span> need your stay confirmation</span></div><div class="dot"></div></div></div>
             </div></div>
             <div class="section"><div class="section-head"><h3>Apr 7 · Monday</h3><span>3 items</span></div><div class="timeline">
               <div class="time-row"><div class="time">8:20</div><div class="row loose"><div class="icon">⛩️</div><div class="row-copy"><b>Fushimi Inari sunrise</b><span><span class="pill">P</span> <span class="pill">A</span> <span class="pill">L</span> taking early train</span></div></div></div>
-              <div class="time-row"><div class="time">12:30</div><div class="row loose"><div class="icon">🍣</div><div class="row-copy"><b>Lunch area TBD</b><span>Vote from Map Wall closes at 9am</span></div><span class="pill owed">Call</span></div></div>
+              <div class="time-row"><div class="time">12:30</div><div class="row loose"><div class="icon">🍣</div><div class="row-copy"><b>Lunch area TBD</b><span>Vote from Places closes at 9am</span></div><span class="pill owed">Call</span></div></div>
               <div class="time-row"><div class="time">16:00</div><div class="row loose"><div class="icon">🎟️</div><div class="row-copy"><b>Tea ceremony</b><span>Prebooked · deposit paid by Maya</span></div><span class="pill sand">Locked</span></div></div>
             </div></div>
             <div class="section"><div class="section-head"><h3>Undated backlog</h3><span>Add</span></div><div class="stack"><div class="row"><div class="icon">□</div><div class="row-copy"><b>Book rain-day museum</b><span>Needs a day after weather check</span></div></div><div class="row"><div class="icon">□</div><div class="row-copy"><b>Reserve farewell dinner</b><span>Pick between Gion and Pontocho</span></div></div></div></div>
           </section>
 
           <section class="screen" data-screen="crew">
-            <div class="person-list" id="personList"><div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Crew</h2><p>Dorm hall · who is in this?</p></div><button class="icon-button">＋</button></div>
+            <div class="person-list" id="personList"><div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">People</h2><p>Everyone going on this trip</p></div><button class="icon-button">＋</button></div>
               <div class="section" style="margin-top:2px"><div class="section-head"><h3>Organizer</h3><span>7 travelers</span></div><div class="row" data-person="sawyer"><div class="avatar">S</div><div class="row-copy"><b>Sawyer</b><span>Organizer · arrives Apr 6 · owes $42</span></div><div class="chev">›</div></div></div>
-              <div class="section"><div class="section-head"><h3>Traveler rooms</h3><span>Message anyone</span></div><div class="stack"><div class="row" data-person="maya"><div class="avatar">M</div><div class="row-copy"><b>Maya Chen</b><span>Gets back $128 · booked hotel and tea</span></div><span class="pill green">Online</span></div><div class="row" data-person="jon"><div class="avatar">J</div><div class="row-copy"><b>Jon Bell</b><span>Owes $61 · votes in on 8 places</span></div><div class="dot"></div></div><div class="row" data-person="priya"><div class="avatar">P</div><div class="row-copy"><b>Priya Shah</b><span>Settled · pinned Fushimi Inari</span></div><div class="chev">›</div></div></div></div>
+              <div class="section"><div class="section-head"><h3>Travelers</h3><span>Message anyone</span></div><div class="stack"><div class="row" data-person="maya"><div class="avatar">M</div><div class="row-copy"><b>Maya Chen</b><span>Gets back $128 · booked hotel and tea</span></div><span class="pill green">Online</span></div><div class="row" data-person="jon"><div class="avatar">J</div><div class="row-copy"><b>Jon Bell</b><span>Owes $61 · votes in on 8 places</span></div><div class="dot"></div></div><div class="row" data-person="priya"><div class="avatar">P</div><div class="row-copy"><b>Priya Shah</b><span>Settled · pinned Fushimi Inari</span></div><div class="chev">›</div></div></div></div>
             </div>
-            <div class="person-detail" id="personDetail"><div class="topbar"><button class="back" id="backToCrew">‹</button><div class="title-block"><h2 class="serif" id="personName">Maya Chen</h2><p id="personMeta">Traveler room</p></div><button class="icon-button" data-go="chat">💬</button></div>
+            <div class="person-detail" id="personDetail"><div class="topbar"><button class="back" id="backToCrew">‹</button><div class="title-block"><h2 class="serif" id="personName">Maya Chen</h2><p id="personMeta">Traveler details</p></div><button class="icon-button" data-go="chat">💬</button></div>
               <div class="card"><div class="avatar" style="width:58px;height:58px;font-size:22px" id="personInitial">M</div><h3 class="serif" id="personHeadline" style="font-size:27px;margin-top:12px">Gets back $128</h3><p class="quiet" id="personDetailText">Organizer helper · arrives Apr 6 15:40 · departs Apr 13 11:20</p><button class="primary" style="margin-top:14px" data-go="chat">Message Maya</button></div>
-              <div class="section"><div class="section-head"><h3>Their footprint</h3><span>Across basecamp</span></div><div class="subgrid"><div class="metric"><div class="value serif">6</div><div class="label">Places</div></div><div class="metric"><div class="value serif">4</div><div class="label">Expenses</div></div><div class="metric"><div class="value serif">3</div><div class="label">Bookings</div></div><div class="metric"><div class="value serif">12</div><div class="label">Votes</div></div></div></div>
-              <div class="section"><div class="section-head"><h3>Recent items</h3></div><div class="stack"><div class="row"><div class="icon">🏨</div><div class="row-copy"><b>Kyoto Station rooms</b><span>Hotel · Maya booked · you need to confirm</span></div></div><div class="row"><div class="icon">🍜</div><div class="row-copy"><b>Ramen alley dinner</b><span>Expense · paid $196</span></div></div><div class="row"><div class="icon">✓</div><div class="row-copy"><b>Yes on Fushimi Inari</b><span>Vote · pinned by Priya</span></div></div></div></div>
+              <div class="section"><div class="section-head"><h3>Their activity</h3><span>Across this trip</span></div><div class="subgrid"><div class="metric"><div class="value serif">6</div><div class="label">Places</div></div><div class="metric"><div class="value serif">4</div><div class="label">Expenses</div></div><div class="metric"><div class="value serif">3</div><div class="label">Bookings</div></div><div class="metric"><div class="value serif">12</div><div class="label">Votes</div></div></div></div>
+              <div class="section"><div class="section-head"><h3>Recent items</h3></div><div class="stack"><div class="row"><div class="icon">🏨</div><div class="row-copy"><b>Kyoto Station hotel</b><span>Hotel · Maya booked · you need to confirm</span></div></div><div class="row"><div class="icon">🍜</div><div class="row-copy"><b>Ramen alley dinner</b><span>Expense · paid $196</span></div></div><div class="row"><div class="icon">✓</div><div class="row-copy"><b>Yes on Fushimi Inari</b><span>Vote · pinned by Priya</span></div></div></div></div>
             </div>
           </section>
 
           <section class="screen" data-screen="kitty">
-            <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Kitty</h2><p>The fair ledger</p></div><button class="icon-button">＋</button></div>
+            <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Money</h2><p>The fair ledger</p></div><button class="icon-button">＋</button></div>
             <div class="hero"><div class="eyebrow">Your balance</div><div class="subgrid" style="margin-top:12px"><div class="metric"><div class="value serif">$42</div><div class="label">You owe</div></div><div class="metric"><div class="value serif">$18</div><div class="label">You get back</div></div></div><button class="primary" style="margin-top:13px" id="showRepay">View repayment plan</button></div>
             <div class="section"><div class="section-head"><h3>Quick add</h3><span>On the go</span></div><div class="card"><div style="display:flex;gap:9px"><button class="ghost" style="flex:1">$ Amount</button><button class="ghost" style="flex:1">Who paid?</button></div><button class="primary" style="margin-top:10px">Add equal split expense</button></div></div>
             <div class="section" id="expenseList"><div class="section-head"><h3>Expenses</h3><span>Balances</span></div><div class="stack"><div class="row loose"><div class="icon">🍜</div><div class="row-copy"><b>Ramen alley dinner</b><span>Maya paid $196 · you owe $39</span></div><span class="pill owed">Due</span></div><div class="row loose"><div class="icon">🚕</div><div class="row-copy"><b>Station taxis</b><span>You paid $82 · Jon and Priya owe you</span></div><span class="pill green">Back</span></div><div class="row loose"><div class="icon">🎟️</div><div class="row-copy"><b>Tea ceremony deposit</b><span>Maya paid $120 · awaiting headcount</span></div></div></div></div>
@@ -257,7 +270,7 @@
           </section>
 
           <section class="screen" data-screen="journal">
-            <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Journal</h2><p>The guest book</p></div><button class="icon-button">＋</button></div>
+            <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Memories</h2><p>The guest book</p></div><button class="icon-button">＋</button></div>
             <div class="hero"><div class="eyebrow">After the trip</div><h3 class="serif">Remember when…</h3><p class="quiet" style="margin-top:8px">One-liners, short paragraphs, album links, and the group chat thread that keeps the story together.</p></div>
             <div class="section"><div class="section-head"><h3>Guest book</h3><span>No ratings</span></div><div class="stack"><div class="row loose"><div class="avatar">P</div><div class="row-copy"><b>Priya</b><span>“The sunrise train was sleepy and perfect. Worth every alarm.”</span></div></div><div class="row loose"><div class="avatar">J</div><div class="row-copy"><b>Jon</b><span>“I still can’t believe we found that tiny jazz bar after dinner.”</span></div></div><div class="row loose"><div class="avatar">M</div><div class="row-copy"><b>Maya</b><span>“Favorite moment: everyone trying to split one umbrella.”</span></div></div></div></div>
             <div class="section"><div class="section-head"><h3>Albums and conversations</h3></div><div class="stack"><div class="row"><div class="icon">🖼️</div><div class="row-copy"><b>Google Photos album</b><span>42 photos · external link MVP</span></div><div class="chev">›</div></div><div class="row" data-go="chat"><div class="icon">💬</div><div class="row-copy"><b>Open Kyoto spring chat</b><span>Trip conversation stays connected</span></div><div class="chev">›</div></div></div></div>
@@ -265,15 +278,15 @@
 
           <section class="screen" data-screen="chat">
             <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Chat</h2><p>Trip channel + direct messages</p></div><button class="icon-button">＋</button></div>
-            <div class="section" style="margin-top:2px"><div class="section-head"><h3>Kyoto spring channel</h3><span>3 unread</span></div><div class="card"><div class="thread"><div class="bubble"><b>Maya</b><br>Hotel confirmed. Sawyer, can you tap the room call when you’re in?</div><div class="bubble me">Yep — checking the Schedule Board now.</div><div class="bubble"><b>Sam</b><br>I added a few lunch places and called a vote.</div></div><button class="primary" style="margin-top:13px">Send message</button></div></div>
+            <div class="section" style="margin-top:2px"><div class="section-head"><h3>Kyoto spring channel</h3><span>3 unread</span></div><div class="card"><div class="thread"><div class="bubble"><b>Maya</b><br>Hotel confirmed. Sawyer, can you tap the stay confirmation when you’re in?</div><div class="bubble me">Yep — checking the Itinerary now.</div><div class="bubble"><b>Sam</b><br>I added a few lunch places and called a vote.</div></div><button class="primary" style="margin-top:13px">Send message</button></div></div>
             <div class="section"><div class="section-head"><h3>Direct messages</h3><span>Cross-trip</span></div><div class="stack"><div class="row"><div class="avatar">M</div><div class="row-copy"><b>Maya Chen</b><span>“Can you send me your arrival window?”</span></div><div class="dot"></div></div><div class="row"><div class="avatar">J</div><div class="row-copy"><b>Jon Bell</b><span>Tahoe and Kyoto shared DM history</span></div></div><div class="row"><div class="avatar">P</div><div class="row-copy"><b>Priya Shah</b><span>Last message yesterday</span></div></div></div></div>
           </section>
         </div>
-        <nav class="nav" aria-label="Prototype rooms">
+        <nav class="nav" aria-label="Prototype navigation">
           <button class="nav-item active" data-go="home">⌂<span>Home</span></button>
-          <button class="nav-item" data-go="welcome">✦<span>Lobby</span></button>
-          <button class="nav-item" data-go="map">🗺<span>Map</span><i class="dot"></i></button>
-          <button class="nav-item" data-go="schedule">📋<span>Board</span></button>
+          <button class="nav-item" data-go="welcome">✦<span>Trip</span></button>
+          <button class="nav-item" data-go="map">🗺<span>Places</span><i class="dot"></i></button>
+          <button class="nav-item" data-go="schedule">📋<span>Plan</span></button>
           <button class="nav-item" data-go="chat">💬<span>Chat</span><i class="dot"></i></button>
         </nav>
       </div>
@@ -281,16 +294,16 @@
 
     <aside class="note-panel">
       <div class="flow-tabs" aria-label="Flow shortcuts">
-        <button class="active" data-go="home">Home</button><button data-go="welcome">Welcome Desk</button><button data-go="map">Map Wall</button><button data-go="schedule">Schedule</button><button data-go="crew">Crew</button><button data-go="kitty">Kitty</button><button data-go="journal">Journal</button><button data-go="chat">Chat</button>
+        <button class="active" data-go="home">Home</button><button data-go="welcome">Trip Overview</button><button data-go="map">Places</button><button data-go="schedule">Itinerary</button><button data-go="crew">People</button><button data-go="kitty">Money</button><button data-go="journal">Memories</button><button data-go="chat">Chat</button>
       </div>
       <div class="note-card active" data-note="home"><h2 class="serif">Home · user lens</h2><p>Answers “what’s going on across my trips?” with live ticking countdown, action-needed calls, grouped feed, and personal money.</p><ul><li>Hero is tappable instead of adding a noisy CTA row.</li><li>Countdown is the emotional serif moment.</li><li>Feed lines are grouped by actor + action.</li></ul></div>
-      <div class="note-card" data-note="welcome"><h2 class="serif">Welcome Desk · trip lobby</h2><p>The per-trip basecamp front door: countdown, basics, who's going, invite code, group chat, activity, and room entrances.</p><ul><li>Absorbs old current-trip dashboard and invite threshold.</li><li>Room cards are the “walk further in” layer.</li><li>Unread dots keep chat/vote calls visible without badges everywhere.</li></ul></div>
-      <div class="note-card" data-note="map"><h2 class="serif">Map Wall</h2><p>POI shortlist with tags, pin markers, weighted voting, one locked-in marker linked to the schedule.</p><ul><li>Vote buttons update the visible score in-place.</li><li>Weak yes is positive (+0.5), abstain is absent/null.</li><li>Locked-in is visually separate from pinned.</li></ul></div>
-      <div class="note-card" data-note="schedule"><h2 class="serif">Schedule Board</h2><p>A day-grouped coordination spine for flights, hotel stays, and prebooked activities with participant avatar chips.</p><ul><li>Day headers read like editorial sections.</li><li>Calls can live inside the timeline and surface back to Home.</li><li>Undated backlog preserves maybe-later tasks.</li></ul></div>
-      <div class="note-card" data-note="crew"><h2 class="serif">Crew</h2><p>Dorm hall list; tap a person to open their room and see their footprint across places, expenses, bookings, votes, role, timing, and money.</p><ul><li>Person room is a cross-cutting derived view.</li><li>Message button demonstrates DM entry point.</li><li>Money status stays glanceable before detail.</li></ul></div>
-      <div class="note-card" data-note="kitty"><h2 class="serif">Kitty</h2><p>The fair ledger: user-first balances, quick on-the-go expense add, expense list, and repayment plan.</p><ul><li>Tap “View repayment plan” to swap from list to settlement guidance.</li><li>Money uses serif as an emotional number.</li><li>Quick add stays lightweight and non-formy.</li></ul></div>
-      <div class="note-card" data-note="journal"><h2 class="serif">Journal</h2><p>The guest book for after-trip closure: short memories, external album links, and a link back to chat. No ratings.</p><ul><li>Warm closure, not review mechanics.</li><li>External albums are MVP-compatible.</li><li>Chat tie-in keeps the story thread alive.</li></ul></div>
-      <div class="note-card" data-note="chat"><h2 class="serif">Chat</h2><p>First-release text chat: one trip channel plus user-level direct messages, with minimal unread dots.</p><ul><li>Shows trip thread and cross-trip DM list on one surface.</li><li>No typing indicators, read receipts, media, or threads.</li><li>Entry points exist from Welcome Desk and Crew rooms.</li></ul></div>
+      <div class="note-card" data-note="welcome"><h2 class="serif">Trip Overview</h2><p>The per-trip front door: cover photo, countdown, basics, who's going, invite code, group chat, activity, and trip sections.</p><ul><li>Uses the trip name as the main page title.</li><li>Cover image gives each trip its own feel.</li><li>Unread dots keep chat/vote calls visible without badges everywhere.</li></ul></div>
+      <div class="note-card" data-note="map"><h2 class="serif">Places</h2><p>POI shortlist with tags, pin markers, weighted voting, one locked-in marker linked to the itinerary.</p><ul><li>Vote buttons update the visible score in-place.</li><li>Weak yes is positive (+0.5), abstain is absent/null.</li><li>Locked-in is visually separate from pinned.</li></ul></div>
+      <div class="note-card" data-note="schedule"><h2 class="serif">Itinerary</h2><p>A day-grouped coordination spine for flights, hotel stays, and prebooked activities with participant avatar chips.</p><ul><li>Day headers read like editorial sections.</li><li>Calls can live inside the timeline and surface back to Home.</li><li>Undated backlog preserves maybe-later tasks.</li></ul></div>
+      <div class="note-card" data-note="crew"><h2 class="serif">People</h2><p>Traveler list; tap a person to open their detail view and see their footprint across places, expenses, bookings, votes, role, timing, and money.</p><ul><li>Person detail is a cross-cutting derived view.</li><li>Message button demonstrates DM entry point.</li><li>Money status stays glanceable before detail.</li></ul></div>
+      <div class="note-card" data-note="kitty"><h2 class="serif">Money</h2><p>The fair ledger: user-first balances, quick on-the-go expense add, expense list, and repayment plan.</p><ul><li>Tap “View repayment plan” to swap from list to settlement guidance.</li><li>Money uses serif as an emotional number.</li><li>Quick add stays lightweight and non-formy.</li></ul></div>
+      <div class="note-card" data-note="journal"><h2 class="serif">Memories</h2><p>The guest book for after-trip closure: short memories, external album links, and a link back to chat. No ratings.</p><ul><li>Warm closure, not review mechanics.</li><li>External albums are MVP-compatible.</li><li>Chat tie-in keeps the story thread alive.</li></ul></div>
+      <div class="note-card" data-note="chat"><h2 class="serif">Chat</h2><p>First-release text chat: one trip channel plus user-level direct messages, with minimal unread dots.</p><ul><li>Shows trip thread and cross-trip DM list on one surface.</li><li>No typing indicators, read receipts, media, or threads.</li><li>Entry points exist from Trip Overview and People details.</li></ul></div>
     </aside>
   </main>
 </div>
@@ -356,9 +369,9 @@
 
   const people = {
     sawyer: { name: 'Sawyer', initial: 'S', meta: 'Organizer · you', headline: 'Owes $42', detail: 'Organizer · arrives Apr 6 15:40 · departs Apr 13 11:20' },
-    maya: { name: 'Maya Chen', initial: 'M', meta: 'Traveler room', headline: 'Gets back $128', detail: 'Organizer helper · arrives Apr 6 15:40 · departs Apr 13 11:20' },
-    jon: { name: 'Jon Bell', initial: 'J', meta: 'Traveler room', headline: 'Owes $61', detail: 'Traveler · arrives Apr 7 08:10 · departs Apr 13 18:00' },
-    priya: { name: 'Priya Shah', initial: 'P', meta: 'Traveler room', headline: 'Settled', detail: 'Traveler · arrives Apr 5 20:30 · departs Apr 14 09:15' }
+    maya: { name: 'Maya Chen', initial: 'M', meta: 'Traveler details', headline: 'Gets back $128', detail: 'Organizer helper · arrives Apr 6 15:40 · departs Apr 13 11:20' },
+    jon: { name: 'Jon Bell', initial: 'J', meta: 'Traveler details', headline: 'Owes $61', detail: 'Traveler · arrives Apr 7 08:10 · departs Apr 13 18:00' },
+    priya: { name: 'Priya Shah', initial: 'P', meta: 'Traveler details', headline: 'Settled', detail: 'Traveler · arrives Apr 5 20:30 · departs Apr 14 09:15' }
   };
   function resetCrewList() {
     document.getElementById('personList').classList.remove('hidden');
