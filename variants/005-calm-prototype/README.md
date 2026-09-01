@@ -15,7 +15,7 @@ open /Users/sawjai/Documents/wanderaid-designs/variants/005-calm-prototype/index
 - Home — user lens with live ticking countdown, action-needed calls, grouped feed, and personal money glance.
 - Trip Overview — per-trip landing page with photo hero, compact single-box countdown, place/date, people avatars, group chat entry, trip sections, and activity.
 - Places — map-like POI surface, filter chips, weighted votes, call-for-vote item, and locked-in marker linking to Itinerary.
-- Itinerary — day-grouped flight/hotel/activity timeline with participant chips and undated backlog.
+- Itinerary — fixed-size monthly calendar view with event markers, selected-day details, participant chips, and undated backlog.
 - People — traveler list; tapping a person opens their detail view with role, money status, arrival/departure, places/expenses/bookings/votes summary, and message button.
 - Money — expenses, user-first balances, quick-add affordance, and toggled repayment plan.
 - Memories — guest-book entries, external album link, and chat link.
@@ -46,6 +46,12 @@ open /Users/sawjai/Documents/wanderaid-designs/variants/005-calm-prototype/index
 - Removed the persistent invite-code row from Trip Overview and moved it to the top of People, where inviting participants naturally lives.
 - Reduced the bottom navigation bar height and padding so it takes up less vertical space.
 
+## Design changes from the Itinerary calendar pass
+
+- Replaced the top Itinerary day-by-day timeline with a fixed-size monthly calendar.
+- Added day markers for travel/stay, activities, and needs-input items so longer trips do not expand the primary overview vertically.
+- Kept detailed plans in a selected-day list below the calendar, plus the existing undated backlog.
+
 ## Design stance
 
 Calm Editorial light mode, matching the existing Wanderaid direction:
@@ -60,5 +66,5 @@ Calm Editorial light mode, matching the existing Wanderaid direction:
 ## Notes for app translation
 
 - This is a design artifact, not production code.
-- The prototype assumes first-release scope from `docs/product-brief.md`: basic in-app chat, live countdowns, grouped activity feeds, action-needed, weighted POI votes, itinerary bookings, quick-add expenses, and guest book/memories.
+- The prototype assumes first-release scope from `docs/product-brief.md`: basic in-app chat, live countdowns, grouped activity feeds, action-needed, weighted POI votes, calendar-based itinerary bookings, quick-add expenses, and guest book/memories.
 - The app should keep using user-facing labels in product surfaces while preserving the basecamp/room metaphor as internal design framing.

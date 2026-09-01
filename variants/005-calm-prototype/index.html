@@ -151,6 +151,25 @@
   .timeline::before { content: ""; position: absolute; left: 25px; top: 10px; bottom: 10px; width: 1px; background: var(--line); }
   .time-row { display: flex; gap: 12px; position: relative; }
   .time { width: 48px; color: var(--soft); font-size: 11px; font-weight: 850; padding-top: 14px; flex-shrink: 0; }
+  .calendar-card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 14px; box-shadow: 0 18px 44px -36px var(--shadow); }
+  .calendar-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+  .calendar-top b { font-size: 17px; letter-spacing: -0.02em; }
+  .calendar-top span { color: var(--muted); font-size: 11.5px; font-weight: 750; }
+  .calendar-weekdays, .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+  .calendar-weekdays span { color: var(--soft); font-size: 9px; font-weight: 900; letter-spacing: 0.08em; text-align: center; text-transform: uppercase; }
+  .day { min-height: 41px; border: 1px solid transparent; border-radius: 13px; padding: 6px 4px; color: var(--muted); font-size: 11.5px; font-weight: 850; text-align: center; position: relative; background: transparent; }
+  .day.muted { opacity: 0.32; }
+  .day.trip { background: rgba(47,104,78,0.08); border-color: rgba(47,104,78,0.18); color: var(--forest-deep); }
+  .day.today { background: var(--forest); color: #fff; border-color: var(--forest); }
+  .day .marks { position: absolute; left: 50%; bottom: 5px; transform: translateX(-50%); display: flex; gap: 2px; }
+  .mark { width: 4px; height: 4px; border-radius: 999px; background: var(--sand); }
+  .mark.green { background: var(--forest); }
+  .mark.owed { background: var(--owed); }
+  .today .mark { background: rgba(255,255,255,0.82); }
+  .calendar-legend { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; color: var(--muted); font-size: 10.5px; font-weight: 750; }
+  .legend-dot { width: 7px; height: 7px; border-radius: 999px; display: inline-block; margin-right: 4px; background: var(--sand); }
+  .legend-dot.green { background: var(--forest); }
+  .legend-dot.owed { background: var(--owed); }
   .subgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
   .metric { background: var(--raised); border: 1px solid var(--line); border-radius: 18px; padding: 12px 10px; }
   .metric .value { color: var(--forest-deep); font-size: 23px; line-height: 0.98; font-weight: 660; letter-spacing: -0.04em; }
@@ -250,14 +269,21 @@
 
           <section class="screen" data-screen="schedule">
             <div class="topbar"><button class="back" data-go="welcome">‹</button><div class="title-block"><h2 class="serif">Itinerary</h2><p>What are we doing, when?</p></div><button class="icon-button">＋</button></div>
-            <div class="section" style="margin-top:2px"><div class="section-head"><h3>Apr 6 · Sunday</h3><span>Arrival day</span></div><div class="timeline">
-              <div class="time-row"><div class="time">15:40</div><div class="row loose"><div class="icon">✈️</div><div class="row-copy"><b>SFO → KIX</b><span><span class="pill">S</span> <span class="pill">M</span> arrive together</span></div></div></div>
-              <div class="time-row"><div class="time">18:30</div><div class="row loose"><div class="icon">🏨</div><div class="row-copy"><b>Kyoto Station hotel</b><span><span class="pill">M</span> <span class="pill">J</span> need your stay confirmation</span></div><div class="dot"></div></div></div>
+            <div class="section" style="margin-top:2px"><div class="section-head"><h3>April 2027</h3><span>Trip days stay fixed-size</span></div><div class="calendar-card">
+              <div class="calendar-top"><b class="serif">Kyoto spring</b><span>Apr 6–13</span></div>
+              <div class="calendar-weekdays"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+              <div class="calendar-grid" aria-label="April 2027 trip calendar">
+                <div class="day muted">28</div><div class="day muted">29</div><div class="day muted">30</div><div class="day muted">31</div><div class="day">1</div><div class="day">2</div><div class="day">3</div>
+                <div class="day">4</div><div class="day">5</div><div class="day trip today">6<div class="marks"><i class="mark green"></i><i class="mark owed"></i></div></div><div class="day trip">7<div class="marks"><i class="mark green"></i><i class="mark"></i><i class="mark owed"></i></div></div><div class="day trip">8<div class="marks"><i class="mark green"></i></div></div><div class="day trip">9<div class="marks"><i class="mark"></i></div></div><div class="day trip">10<div class="marks"><i class="mark green"></i><i class="mark"></i></div></div>
+                <div class="day trip">11</div><div class="day trip">12<div class="marks"><i class="mark owed"></i></div></div><div class="day trip">13<div class="marks"><i class="mark green"></i></div></div><div class="day">14</div><div class="day">15</div><div class="day">16</div><div class="day">17</div>
+                <div class="day">18</div><div class="day">19</div><div class="day">20</div><div class="day">21</div><div class="day">22</div><div class="day">23</div><div class="day">24</div>
+              </div>
+              <div class="calendar-legend"><span><i class="legend-dot green"></i>Travel/stay</span><span><i class="legend-dot"></i>Activity</span><span><i class="legend-dot owed"></i>Needs input</span></div>
             </div></div>
-            <div class="section"><div class="section-head"><h3>Apr 7 · Monday</h3><span>3 items</span></div><div class="timeline">
-              <div class="time-row"><div class="time">8:20</div><div class="row loose"><div class="icon">⛩️</div><div class="row-copy"><b>Fushimi Inari sunrise</b><span><span class="pill">P</span> <span class="pill">A</span> <span class="pill">L</span> taking early train</span></div></div></div>
-              <div class="time-row"><div class="time">12:30</div><div class="row loose"><div class="icon">🍣</div><div class="row-copy"><b>Lunch area TBD</b><span>Vote from Places closes at 9am</span></div><span class="pill owed">Call</span></div></div>
-              <div class="time-row"><div class="time">16:00</div><div class="row loose"><div class="icon">🎟️</div><div class="row-copy"><b>Tea ceremony</b><span>Prebooked · deposit paid by Maya</span></div><span class="pill sand">Locked</span></div></div>
+            <div class="section"><div class="section-head"><h3>Selected day · Apr 7 Monday</h3><span>3 items</span></div><div class="list-group">
+              <div class="row loose"><div class="icon">⛩️</div><div class="row-copy"><b>8:20 · Fushimi Inari sunrise</b><span><span class="pill">P</span> <span class="pill">A</span> <span class="pill">L</span> taking early train</span></div></div>
+              <div class="row loose"><div class="icon">🍣</div><div class="row-copy"><b>12:30 · Lunch area TBD</b><span>Vote from Places closes at 9am</span></div><span class="pill owed">Call</span></div>
+              <div class="row loose"><div class="icon">🎟️</div><div class="row-copy"><b>16:00 · Tea ceremony</b><span>Prebooked · deposit paid by Maya</span></div><span class="pill sand">Locked</span></div>
             </div></div>
             <div class="section"><div class="section-head"><h3>Undated backlog</h3><span>Add</span></div><div class="stack"><div class="row"><div class="icon">□</div><div class="row-copy"><b>Book rain-day museum</b><span>Needs a day after weather check</span></div></div><div class="row"><div class="icon">□</div><div class="row-copy"><b>Reserve farewell dinner</b><span>Pick between Gion and Pontocho</span></div></div></div></div>
           </section>
@@ -313,7 +339,7 @@
       <div class="note-card active" data-note="home"><h2 class="serif">Home · user lens</h2><p>Answers “what’s going on across my trips?” with live ticking countdown, action-needed calls, grouped feed, and personal money.</p><ul><li>Hero is tappable instead of adding a noisy CTA row.</li><li>Countdown is the emotional serif moment.</li><li>Feed lines are grouped by actor + action.</li></ul></div>
       <div class="note-card" data-note="welcome"><h2 class="serif">Trip Overview</h2><p>The per-trip front door: cover photo, compact countdown, basics, who's going, group chat, activity, and trip sections.</p><ul><li>Uses the trip name as the main page title.</li><li>Cover image gives each trip its own feel.</li><li>Invite code now lives on People, where inviting participants naturally belongs.</li></ul></div>
       <div class="note-card" data-note="map"><h2 class="serif">Places</h2><p>POI shortlist with tags, pin markers, weighted voting, one locked-in marker linked to the itinerary.</p><ul><li>Vote buttons update the visible score in-place.</li><li>Weak yes is positive (+0.5), abstain is absent/null.</li><li>Locked-in is visually separate from pinned.</li></ul></div>
-      <div class="note-card" data-note="schedule"><h2 class="serif">Itinerary</h2><p>A day-grouped coordination spine for flights, hotel stays, and prebooked activities with participant avatar chips.</p><ul><li>Day headers read like editorial sections.</li><li>Calls can live inside the timeline and surface back to Home.</li><li>Undated backlog preserves maybe-later tasks.</li></ul></div>
+      <div class="note-card" data-note="schedule"><h2 class="serif">Itinerary</h2><p>A fixed-size calendar overview for flights, hotel stays, and prebooked activities, with a selected-day detail list below.</p><ul><li>Month grid keeps the page height stable even when the trip spans many days.</li><li>Dots mark travel/stay, activities, and needs-input days without expanding the layout.</li><li>Selected day and undated backlog preserve detail without a long top timeline.</li></ul></div>
       <div class="note-card" data-note="crew"><h2 class="serif">People</h2><p>Traveler list; tap a person to open their detail view and see their footprint across places, expenses, bookings, votes, role, timing, and money.</p><ul><li>Person detail is a cross-cutting derived view.</li><li>Message button demonstrates DM entry point.</li><li>Money status stays glanceable before detail.</li></ul></div>
       <div class="note-card" data-note="kitty"><h2 class="serif">Money</h2><p>The fair ledger: user-first balances, quick on-the-go expense add, expense list, and repayment plan.</p><ul><li>Tap “View repayment plan” to swap from list to settlement guidance.</li><li>Money uses serif as an emotional number.</li><li>Quick add stays lightweight and non-formy.</li></ul></div>
       <div class="note-card" data-note="journal"><h2 class="serif">Memories</h2><p>The guest book for after-trip closure: short memories, external album links, and a link back to chat. No ratings.</p><ul><li>Warm closure, not review mechanics.</li><li>External albums are MVP-compatible.</li><li>Chat tie-in keeps the story thread alive.</li></ul></div>
