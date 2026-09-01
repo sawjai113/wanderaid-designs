@@ -13,7 +13,7 @@ open /Users/sawjai/Documents/wanderaid-designs/variants/005-calm-prototype/index
 ## Included screens and flows
 
 - Home — user lens with live ticking countdown, action-needed calls, grouped feed, and personal money glance.
-- Trip Overview — per-trip landing page with photo hero, countdown, place/date, people avatars, invite code, group chat entry, trip sections, and activity.
+- Trip Overview — per-trip landing page with photo hero, compact single-box countdown, place/date, people avatars, group chat entry, trip sections, and activity.
 - Places — map-like POI surface, filter chips, weighted votes, call-for-vote item, and locked-in marker linking to Itinerary.
 - Itinerary — day-grouped flight/hotel/activity timeline with participant chips and undated backlog.
 - People — traveler list; tapping a person opens their detail view with role, money status, arrival/departure, places/expenses/bookings/votes summary, and message button.
@@ -29,7 +29,7 @@ open /Users/sawjai/Documents/wanderaid-designs/variants/005-calm-prototype/index
 - Places vote buttons update score/counts in place using: yes +1, weak yes +0.5, no -1, abstain not counted.
 - People rows open person detail views.
 - Money repayment button toggles expense list vs repayment plan.
-- Unread dots appear on action-needed items and chat entries.
+- Unread dots appear on action-needed items and chat entries, vertically centered in list rows.
 
 ## Design changes from the first 005 pass
 
@@ -38,6 +38,13 @@ open /Users/sawjai/Documents/wanderaid-designs/variants/005-calm-prototype/index
 - Added visible image affordances for both supported cover-image inputs: upload photo and use image URL.
 - Reworked Home’s “Needs your attention” and “Grouped feed” into shared list containers with toned-down rows and hairline dividers, so each header reads as one section containing multiple items.
 - Applied the same grouped-list treatment to Trip Overview’s activity feed.
+
+## Design changes from this feedback pass
+
+- Center-aligned the red unread/action dots on list rows, especially in “Needs your attention.”
+- Changed countdowns from four separate cards into one shared compact countdown box with four units inside.
+- Removed the persistent invite-code row from Trip Overview and moved it to the top of People, where inviting participants naturally lives.
+- Reduced the bottom navigation bar height and padding so it takes up less vertical space.
 
 ## Design stance
 
